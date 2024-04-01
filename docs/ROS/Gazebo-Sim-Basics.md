@@ -7,3 +7,36 @@ How to build a robot for Gazebo
 How to connect gazebo robots to ROS
 How to build custom Gazebo worlds
 How to write plugins for gazebo worlds and models
+
+
+**Unit 3:   Connect to ROS**
+
+This unit presents concepts around creating a new world in Gazebo. You will learn to create new worlds from scratch with different models, ground, animated objects, and actors. In addition, you will learn how to use plugins and how to control worlds programmatically.
+
+### Exercise 3.1 
+
+`$ rostopic echo /gazebo/model_states`
+
+```
+$ rostopic pub /gazebo/set_model_state gazebo_msgs/ModelState "model_name: 'unit_box'
+pose:
+  position:
+    x: 10.0
+    y: 20.0
+    z: 1.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+twist:
+  linear:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  angular:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+reference_frame: ''"
+```
