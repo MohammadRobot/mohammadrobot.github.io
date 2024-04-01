@@ -9,6 +9,22 @@ How to build custom Gazebo worlds
 How to write plugins for gazebo worlds and models
 
 
+## Git 
+
+GitHub
+
+$ git remote add origin https://github.com/MohammadRobot/robot_racetrack.git
+$ git branch -M main
+$ git push -u origin main
+
+Username: MohammadRobot
+Password: Personal access tokens generated from https://github.com/settings/tokens
+
+
+
+rosbag record -O race-track-rDBk5zAY.bag odm --duration 60
+
+
 **Unit 3:   Connect to ROS**
 
 This unit presents concepts around creating a new world in Gazebo. You will learn to create new worlds from scratch with different models, ground, animated objects, and actors. In addition, you will learn how to use plugins and how to control worlds programmatically.
