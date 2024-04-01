@@ -21,7 +21,6 @@ Username: MohammadRobot
 Password: Personal access tokens generated from https://github.com/settings/tokens
 
 
-
 rosbag record -O race-track-rDBk5zAY.bag odm --duration 60
 
 
@@ -60,4 +59,4 @@ reference_frame: ''"
 ## Gazebo services -
 Gazebo starts with several services available. However, most of them are complex, for example, the /gazebo/spaw_urdf_model, which is internally used when you spawn a robot in a launch file. Therefore, it is not practical to use it from the CLI.
 
-test username
+test 2
