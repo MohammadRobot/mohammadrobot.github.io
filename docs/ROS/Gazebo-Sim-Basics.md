@@ -59,4 +59,90 @@ reference_frame: ''"
 ## Gazebo services -
 Gazebo starts with several services available. However, most of them are complex, for example, the /gazebo/spaw_urdf_model, which is internally used when you spawn a robot in a launch file. Therefore, it is not practical to use it from the CLI.
 
-test 2
+
+ /gazebo/spaw_urdf_model
+
+/gazebo/pause_physics       pause  the simulation
+/gazebo/unpause_physics     unpause the simulation
+/gazebo/reset_simulator     will put all objects back in their initial places.
+/gazebo/reset_world         does the same, except it will also reset the simulation time
+
+`$ rosservice call /gazebo/reset_world`
+
+
+`roslaunch robot_description spawn.launch`
+
+`roslaunch robot_description spawn.launch x:=6 model_name:=second_model`
+
+
+
+### 3.2   ROS Plugin - Robot differential driver
+
+You have the robot ready to move! Your next step is to connect it to ROS is to make it possible to move the robot by it publishing to a ROS topic. There is a plugin for it, the gazebo_ros_diff_drive, and it can be included in the URDF model using the Gazebo tag. This is how it goes:
+
+
+
+publisher.py 
+
+```
+# Do not skip line 2 
+#!/usr/bin/env python 
+  
+import rospy 
+# the following line depends upon the 
+# type of message you are trying to publish 
+from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+from nav_msgs.msg import Odometry 
+  
+def callback(data):
+    print('X: %s, Y: %s' % (data.pose.pose.position.x, data.pose.pose.position.y))
+    #print("callback")
+
+
+def subpub(): 
+    # Subscribe to topic 
+    sub = rospy.Subscriber('/odom', Odometry, callback)  
+    # define the actions the publisher will make 
+    pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10) 
+    # initialize the publishing node 
+    rospy.init_node('gazebo', anonymous=True) 
+      
+    # define how many times per second 
+    # will the data be published 
+    # let's say 10 times/second or 10Hz 
+    rate = rospy.Rate(10) 
+    # to keep publishing as long as the core is running 
+    while not rospy.is_shutdown(): 
+        data = Twist()
+        data.linear.x= 0.5
+        data.angular.z= 0.2
+          
+        # you could simultaneously display the data 
+        # on the terminal and to the log file 
+        #rospy.loginfo(data) 
+          
+        # publish the data to the topic using publish() 
+        pub.publish(data) 
+          
+        # keep a buffer based on the rate defined earlier 
+        rate.sleep() 
+  
+  
+if __name__ == '__main__': 
+    # it is good practice to maintain 
+    # a 'try'-'except' clause 
+    try: 
+        subpub() 
+    except rospy.ROSInterruptException: 
+        pass
+```
+
+
+
+
+It was shown the commonly used plugins for basic robots. You can check all plugins available here:
+
+    http://wiki.ros.org/gazebo_ros_pkgs
+    https://github.com/ros-simulation/gazebo_ros_pkgs
+
