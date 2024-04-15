@@ -226,3 +226,175 @@ And the following to the model.sdf file:
   </model>
 </sdf>
 ```
+
+
+## Unit 5:   Write Gazebo Plugins
+
+World Plugin
+
+
+- Exercise 5.2.1. -
+
+Create a new plugin called world_plugin.
+
+  1. Create the file world_plugin.cc
+    
+    $ cd ~/catkin_ws
+    $ catkin_create_pkg world_plugin gazebo gazebo_ros gazebo_plugins roscpp
+    $ touch ~/catkin_ws/src/world_plugin/src/my_gazebo_world_plugin.cc
+  ```
+  #include <gazebo/gazebo.hh>
+  #include <gazebo/physics/physics.hh>
+  namespace gazebo {
+  class MyGazeboPlugin : public WorldPlugin {
+  public:
+    MyGazeboPlugin() : WorldPlugin() { printf("Plugin constructor method!\n"); }
+
+  public:
+    void Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
+      // set a node
+      transport::NodePtr node(new transport::Node());
+      node->Init(_world->Name());
+
+      // set publisher
+      transport::PublisherPtr publisher =
+          node->Advertise<msgs::Factory>("~/factory");
+
+      // create msg obj
+      msgs::Factory msg;
+
+      // model to use
+      msg.set_sdf_filename("model://jersey_barrier");
+
+      // setup new position
+      msgs::Set(msg.mutable_pose(),
+                ignition::math::Pose3d(ignition::math::Vector3d(5, 4, 0),
+                                      ignition::math::Quaterniond(0, 0, 0)));
+      // Send the message
+      publisher->Publish(msg);
+    }
+  };
+
+  // Register plugin
+  GZ_REGISTER_WORLD_PLUGIN(MyGazeboPlugin)
+  } // namespace gazebo
+  ```
+
+
+    $ export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/catkin_ws/devel/lib
+
+update CMakeLists.txt
+```
+```
+cmake_minimum_required(VERSION 3.0.2)
+project(world_plugin)
+
+find_package(gazebo REQUIRED)
+
+find_package(catkin REQUIRED COMPONENTS
+  gazebo_plugins
+  gazebo_ros
+  roscpp
+)
+
+catkin_package()
+
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
+
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
+add_library(my_gazebo_world_plugin SHARED src/my_gazebo_world_plugin.cc)
+target_link_libraries(my_gazebo_world_plugin ${GAZEBO_LIBRARIES})
+```
+```
+
+    $ cd ~/catkin_ws
+    $ catkin_make
+    $ source devel/setup.bash
+
+
+
+    $ mkdir -p ~/catkin_ws/src/world_plugin/launch
+    $ touch ~/catkin_ws/src/world_plugin/launch/gazebo.launch
+
+
+gazebo.launch      
+``
+  <launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find world_plugin)/worlds/gazebo.world" />
+      <arg name="paused" value="false"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>
+      <arg name="headless" value="false"/>
+      <arg name="debug" value="false"/>
+    </include>
+  </launch>
+```
+
+
+    $ mkdir -p ~/catkin_ws/src/world_plugin/worlds
+    $ touch ~/catkin_ws/src/world_plugin/worlds/gazebo.world
+
+
+gazebo.world
+```  ```
+  <?xml version="1.0"?>
+  <sdf version="1.4">
+    <world name="default">
+      <plugin name="my_gazebo_world_plugin" filename="libmy_gazebo_world_plugin.so"/>
+    </world>
+  </sdf>
+
+```
+
+  1. Add the necessary instructions in CMakeLists.txt
+
+```
+cmake_minimum_required(VERSION 3.0.2)
+project(world_plugins)
+
+find_package(gazebo REQUIRED)
+
+find_package(catkin REQUIRED COMPONENTS
+  gazebo_plugins
+  gazebo_ros
+  roscpp
+)
+
+catkin_package()
+
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
+
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
+add_library(my_gazebo_world_plugin SHARED src/my_gazebo_world_plugin.cc)
+target_link_libraries(my_gazebo_world_plugin ${GAZEBO_LIBRARIES})
+
+```
+
+    $ roslaunch world_plugin gazebo.launch
+
+
+
+
+### - Exercise 5.3.1 -
+
+
+touch ~/catkin_ws/src/writing_plugins/worlds/model.world
+
+touch ~/catkin_ws/src/writing_plugins/src/a_model_plugin.cc
+
+
+
+
