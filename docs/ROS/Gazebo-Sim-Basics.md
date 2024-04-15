@@ -146,3 +146,83 @@ It was shown the commonly used plugins for basic robots. You can check all plugi
     http://wiki.ros.org/gazebo_ros_pkgs
     https://github.com/ros-simulation/gazebo_ros_pkgs
 
+
+## Unit 4:   Build a World
+
+
+### Creating Gazebo Models
+
+package and create a folder to contain your models:
+
+  Execute
+
+`cd ~/catkin_ws/src/studying_gazebo`
+
+`mkdir -p models/box_model`
+
+`cd models/box_model`
+
+`touch model.config`
+
+`touch model.sdf`
+
+Do not use materials or textures in this first moment. Instead, copy and paste the content below to the model.config file. Change author and other information accordingly:
+
+  Copy and paste
+```
+<?xml version="1.0"?>
+
+<model>
+  <name>Box Model</name>
+  <version>1.0</version>
+  <sdf version="1.6">model.sdf</sdf>
+
+  <author>
+    <name>Author's name</name>
+    <email>no-author@mail.com</email>
+  </author>
+
+  <description>
+    A simple box model
+  </description>
+</model>
+```
+And the following to the model.sdf file:
+
+ 
+```
+<?xml version='1.0'?>
+<sdf version="1.4">
+  <model name="box_model">
+    <pose>0 0 0.5 0 0 0</pose>
+    <static>false</static>
+    <link name="link">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.083</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.083</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.083</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>1 1 1</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>1 1 1</size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
+```
