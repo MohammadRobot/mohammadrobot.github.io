@@ -391,10 +391,10 @@ target_link_libraries(my_gazebo_world_plugin ${GAZEBO_LIBRARIES})
 ### - Exercise 5.3.1 -
 
 
-touch ~/catkin_ws/src/writing_plugins/worlds/model.world
+    touch ~/catkin_ws/src/writing_plugins/worlds/model.world
 
-touch ~/catkin_ws/src/writing_plugins/src/a_model_plugin.cc
+    touch ~/catkin_ws/src/writing_plugins/src/a_model_plugin.cc
 
 
-
+    roslaunch writing_plugins gazebo.launch
 
