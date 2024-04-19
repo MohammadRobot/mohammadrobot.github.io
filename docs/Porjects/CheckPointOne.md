@@ -241,3 +241,4 @@ To chage the color of the robot in Gazebo add the following to URDF file
 
 
 
+Hi @<Grader-Tag> and @<Your-Instructor-Tag>: My **Checkpoint xx: <Checkpoint Title>** is ready for re-evaluation
