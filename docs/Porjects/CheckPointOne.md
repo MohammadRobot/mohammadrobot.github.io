@@ -239,6 +239,3 @@ To chage the color of the robot in Gazebo add the following to URDF file
 
 - For Git commnad check [Git Cheat Sheets](https://training.github.com/downloads/github-git-cheat-sheet/ )
 
-
-
-Hi @<Grader-Tag> and @<Your-Instructor-Tag>: My **Checkpoint xx: <Checkpoint Title>** is ready for re-evaluation
