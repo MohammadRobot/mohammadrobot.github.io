@@ -1,4 +1,6 @@
 
+# ROS
+ROS is basically the framework that allows us to do all that we showed along this chapter. It provides the background to manage all these processes and communications between them... and much, much more!! In this tutorial you've just scratched the surface of ROS, the basic concepts. ROS is an extremely powerful tool. If you dive into our courses you'll learn much more about ROS and you'll find yourself able to do almost anything with your robots!
 
 ## ROS package
 
@@ -67,7 +69,40 @@ target_link_libraries(simple
  )
 ```
 
+* `$ catkin_make`
+##  Roscore
 
+The roscore is the main process that manages all of the ROS system. You always need to have a roscore running in order to work with ROS. The command that launches a roscore is:
+* `$ roscore`
+
+
+## ROS Nodes 
+
+ROS nodes are basically programs made in ROS. The ROS command to see what nodes are actually running in a computer is:
+
+* `$ rosnode list`
+
+* `$ rosndoe info /<node_name>`
+
+
+## Parameter Server
+ Parameter Server is a dictionary that ROS uses to store parameters. These parameters can be used by nodes at runtime and are normally used for static data, such as configuration parameters.
+
+ * `$ rosparam list`
+
+ To get a value of a particular parameter, you can type:
+ * `$rosparam get <parameter_name>`
+
+
+And to set a value to a parameter, you can type:
+* `$ rosparam set <parameter_name> <value>`
+
+## Environment Variables
+ROS uses a set of Linux system environment variables in order to work properly. You can check these variables by typing:
+
+* `$ export | grep ROS`
+
+The most important variables are the ROS_MASTER_URI and the ROS_PACKAGE_PATH.
 
 ## rostopic
 1. rostopic list
@@ -88,3 +123,20 @@ For more information visit: http://wiki.ros.org/rostopic
 ## Publisher and Subscriber
 
 For more information visit: http://wiki.ros.org/roscpp_tutorials/Tutorials/WritingPublisherSubscriber
+
+
+
+
+## Referaces 
+
+[theconstruct.ai](https://www.theconstruct.ai/)
+
+ROS Packages: http://wiki.ros.org/Packages
+
+Ros Nodes: http://wiki.ros.org/Nodes
+
+Parameter Server: http://wiki.ros.org/Parameter%20Server
+
+Roscore: http://wiki.ros.org/roscore
+
+ROS Environment Variables: http://wiki.ros.org/ROS/EnvironmentVariables
