@@ -56,20 +56,32 @@ To create the launch file run the followin command
 * `$ mkdir launch`
 * `$ touch launch/<launch name>.launch`
 
+```xml
+<launch>
+    <!-- My Package launch file -->
+    <node pkg="<package_name>" type="<cpp_executable_name>" name="<node_name>"  output="screen">
+    </node>
+</launch>
+```
+
 ### CMakeLists File
 Modify the CMakeLists.txt file in order to generate an executable from the C++ file you have just created.
 
 In the Build section of your CMakeLists.txt file, add the following lines:
 
 ```
-add_executable(simple src/<program name>.cpp)
-add_dependencies(simple ${simple_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(simple
-   ${catkin_LIBRARIES}
- )
+add_executable(<node_name> src/<program name>.cpp)
+add_dependencies(<node_name>  ${<node_name>_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(<node_name>  ${catkin_LIBRARIES})
 ```
-
+Run the the following commands 
+* `$ cd ~/catkin_ws`
 * `$ catkin_make`
+
+After compiling, it's also very important to source your workspace. This will make sure that ROS will always get the latest changes done in your workspace.
+
+* `$ source devel/setup.bash`
+
 ##  Roscore
 
 The roscore is the main process that manages all of the ROS system. You always need to have a roscore running in order to work with ROS. The command that launches a roscore is:
@@ -104,7 +116,7 @@ ROS uses a set of Linux system environment variables in order to work properly. 
 
 The most important variables are the ROS_MASTER_URI and the ROS_PACKAGE_PATH.
 
-## rostopic
+## rostopic 
 1. rostopic list
 
     Display a list of current topics.
