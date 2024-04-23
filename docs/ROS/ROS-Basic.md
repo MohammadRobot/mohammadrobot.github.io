@@ -88,6 +88,9 @@ The roscore is the main process that manages all of the ROS system. You always n
 * `$ roscore`
 
 
+## rqt_graph
+
+
 ## ROS Nodes 
 
 ROS nodes are basically programs made in ROS. The ROS command to see what nodes are actually running in a computer is:
@@ -120,17 +123,36 @@ The most important variables are the ROS_MASTER_URI and the ROS_PACKAGE_PATH.
 1. rostopic list
 
     Display a list of current topics.
-
-        $ rostopic list
+    
+        `$ rostopic list`
 
 1. rostopic echo
 
     Display messages published to a topic.
 
-        $ rostopic echo /topic_name
+        $ rostopic echo /<topic_name>
+
+* To get information about a certain topic
+        
+        $ rostopic info <topic_name>
+
 
 For more information visit: http://wiki.ros.org/rostopic 
 
+
+##  Messages
+
+ROS provides a lot of different messages. You can even create your own messages, but it is recommended to use ROS default messages when its possible.
+
+Messages are defined in .msg files, which are located inside a msg directory of a package.
+
+        $ rosmsh list
+
+To show one msg type 
+
+        $ rosmsg show <message_name>
+
+    
 
 ## Publisher and Subscriber
 
