@@ -155,6 +155,10 @@ To show one msg type
 
         $ rosmsg show <message_name>
 
+
+### To ceate custom msg
+
+
     
 
 ## Publisher and Subscriber
