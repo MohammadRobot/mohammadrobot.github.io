@@ -45,6 +45,24 @@ After compiling, it's also very important to source your workspace. This will ma
 Create the programe file in `src` directory 
 * `$ touch src/<program name>.cpp`
 
+### CMakeLists File
+Modify the CMakeLists.txt file in order to generate an executable from the C++ file you have just created.
+
+In the Build section of your CMakeLists.txt file, add the following lines:
+
+```
+add_executable(<node_name> src/<program name>.cpp)
+add_dependencies(<node_name>  ${<node_name>_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(<node_name>  ${catkin_LIBRARIES})
+```
+Run the the following commands 
+* `$ cd ~/catkin_ws`
+* `$ catkin_make`
+
+After compiling, it's also very important to source your workspace. This will make sure that ROS will always get the latest changes done in your workspace.
+
+* `$ source devel/setup.bash`
+
 ### Launch file
 Create launch direcotory and **launch** file whicg contain the following: 
 * pkg="package_name" # Name of the package that contains the code of the ROS program to execute
@@ -63,24 +81,6 @@ To create the launch file run the followin command
     </node>
 </launch>
 ```
-
-### CMakeLists File
-Modify the CMakeLists.txt file in order to generate an executable from the C++ file you have just created.
-
-In the Build section of your CMakeLists.txt file, add the following lines:
-
-```
-add_executable(<node_name> src/<program name>.cpp)
-add_dependencies(<node_name>  ${<node_name>_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(<node_name>  ${catkin_LIBRARIES})
-```
-Run the the following commands 
-* `$ cd ~/catkin_ws`
-* `$ catkin_make`
-
-After compiling, it's also very important to source your workspace. This will make sure that ROS will always get the latest changes done in your workspace.
-
-* `$ source devel/setup.bash`
 
 ##  Roscore
 
@@ -124,7 +124,7 @@ The most important variables are the ROS_MASTER_URI and the ROS_PACKAGE_PATH.
 
     Display a list of current topics.
     
-        `$ rostopic list`
+        $ rostopic list
 
 1. rostopic echo
 
@@ -136,6 +136,9 @@ The most important variables are the ROS_MASTER_URI and the ROS_PACKAGE_PATH.
         
         $ rostopic info <topic_name>
 
+* To  publish specify message with the value you and the topic you specify.
+        
+        $ rostopic pub <topic_name> <message_type> <value>
 
 For more information visit: http://wiki.ros.org/rostopic 
 
@@ -158,6 +161,72 @@ To show one msg type
 
 For more information visit: http://wiki.ros.org/roscpp_tutorials/Tutorials/WritingPublisherSubscriber
 
+
+### Publisher
+
+```cpp
+#include <ros/ros.h>
+#include <std_msgs/Int32.h>
+// Import all the necessary ROS libraries and import the Int32 message from the std_msgs package
+
+int main(int argc, char** argv) {
+
+    ros::init(argc, argv, "topic_publisher"); // Initiate a Node named 'topic_publisher'
+    ros::NodeHandle nh;
+    
+    // Create a Publisher object, that willpublish on the counter topic messages of type Int32
+    
+    ros::Publisher pub = nh.advertise<std_msgs::Int32>("counter", 1000); 
+    ros::Rate loop_rate(2); // Set a publish rate of 2 Hz
+    
+    std_msgs::Int32 count; // Create a variable of type Int32
+    count.data = 0; // Initialize 'count' variable
+    
+    while (ros::ok()) // Create a loop that will go until someone stops the program execution
+    {
+        pub.publish(count); // Publish the message within the 'count' variable
+        ros::spinOnce();
+        loop_rate.sleep(); // Make sure the publish rate maintains at 2 Hz
+        ++count.data; // Increment 'count' variable
+    }
+    
+    return 0;
+}
+
+
+```
+
+
+### Subscriber
+
+```cpp
+#include <ros/ros.h>
+#include <std_msgs/Int32.h>
+
+// Define a function called 'callback' that receives a parameter named 'msg' 
+
+void counterCallback(const std_msgs::Int32::ConstPtr& msg) {
+  ROS_INFO("%d", msg->data); // Print the value 'data' inside the 'msg' parameter
+}
+
+int main(int argc, char** argv) {
+    
+    // Initiate a Node called 'topic_subscriber'
+    ros::init(argc, argv, "topic_subscriber"); 
+    ros::NodeHandle nh;
+    
+    // Create a Subscriber object that will
+    // listen to the /counter topic and will call the 'callback' function each time
+    // it reads something from the topic
+
+    ros::Subscriber sub = nh.subscribe("counter", 1000, counterCallback);                                                                     
+
+    ros::spin(); // Create a loop that will keep the program in execution
+    
+    return 0;
+}
+
+```
 
 
 
