@@ -231,8 +231,94 @@ int main(int argc, char** argv) {
 }
 
 ```
+##  Services
+
+A ROS Service provides a certain functionality to your robot. A ROS Service is composed of two parts:
+
+Service Server: It is the one that PROVIDES the functionality. Whatever you want your Service to do, you have to place it in the Service Server.
+
+Service Client: It is the one that CALLS the functionality provided by the Service Server. That is, it CALLS the Service Server.
+
+ROS Services use a special service message, which is composed of two parts:
+
+Request: The request is the part of the message that is used to CALL the Service. Therefore, it is sent by the Service Client to the Service Server.
+
+Response: The response is the part of the message that is returned by the Service Server to the Service Client, once the Service has finished.
+
+ROS Services are synchronous. This means that whenever you CALL a Service Server, you have to wait until the Service has finished (and returns a response) before you can do other stuff with your robot.
 
 
+Call Serveice 
+
+    $ rosservice call /the_service_name TAB-TAB
+
+    $ rosservice info /name_of_the_service
+
+    $ rossrv show name_of_the_package/Name_of_Service_message
+
+### Service Clinet 
+
+```cpp
+#include "ros/ros.h"
+#include "trajectory_by_name_srv/TrajByName.h"
+// Import the service message used by the service /trajectory_by_name
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "service_client"); // Initialise a ROS node with the name service_client
+  ros::NodeHandle nh;
+
+  // Create the connection to the service /trajectory_by_name
+  ros::service::waitForService("/trajectory_by_name");  // wait for service to be running
+  ros::ServiceClient traj_by_name_service = nh.serviceClient<trajectory_by_name_srv::TrajByName>("/trajectory_by_name");
+  trajectory_by_name_srv::TrajByName srv; // Create an object of type TrajByName
+  srv.request.traj_name = "release_food"; // Fill the variable traj_name with the desired value
+  
+  if (traj_by_name_service.call(srv)) // Send through the connection the name of the trajectory to execute
+  {
+    ROS_INFO("%s", srv.response.status_message.c_str()); // Print the result given by the service called
+  }
+  else
+  {
+    ROS_ERROR("Failed to call service /trajectory_by_name");
+    return 1;
+  }
+
+  return 0;
+}
+
+```
+
+
+### Serveice Server
+
+
+```cpp
+#include "ros/ros.h"
+#include "std_srvs/Empty.h"
+// Import the service message header file generated from the Empty.srv message
+
+// We define the callback function of the service
+bool my_callback(std_srvs::Empty::Request  &req,
+                 std_srvs::Empty::Response &res)
+{  
+  // res.some_variable = req.some_variable + req.other_variable;
+  ROS_INFO("My_callback has been called"); // We print an string whenever the Service gets called
+  return true;
+}
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "service_server");
+  ros::NodeHandle nh;
+
+  ros::ServiceServer my_service = nh.advertiseService("/my_service", my_callback); // create the Service called                                                                                          // my_service with the defined                                                                                        // callback
+  ros::spin(); // mantain the service open.
+
+  return 0;
+}
+
+```
 
 ## Referaces 
 
