@@ -25,7 +25,10 @@ All launch files are contained within a <launch> tag. Inside that tag, you can s
 ### Create a package
 
 When we want to create packages, we need to work in a very specific ROS workspace, which is known as the catkin workspace. The catkin workspace is the directory in your hard disk where your own ROS packages must reside in order to be usable by ROS. Usually, the catkin workspace directory is called catkin_ws.
+
 `$ catkin_create_pkg <package_name> <package_dependecies>`
+
+ex: `$ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp`
 
 * `$ rospack list`: Gives you a list with all of the packages in your ROS system.
 * `$ rospack list | grep <package_name>`: Filters, from all of the packages located in the ROS system,the package named package_name.
@@ -247,3 +250,5 @@ Parameter Server: http://wiki.ros.org/Parameter%20Server
 Roscore: http://wiki.ros.org/roscore
 
 ROS Environment Variables: http://wiki.ros.org/ROS/EnvironmentVariables
+
+
