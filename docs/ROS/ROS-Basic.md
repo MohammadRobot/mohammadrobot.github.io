@@ -323,6 +323,12 @@ int main(int argc, char **argv)
 
 ```
 
+
+## ROS commands:
+
+`rosrun`: ROS command that allows you to run a ROS program without having to create a launch file to launch it (it is a different way from what we've been doing here).
+
+
 ## Referaces 
 
 [theconstruct.ai](https://www.theconstruct.ai/)
