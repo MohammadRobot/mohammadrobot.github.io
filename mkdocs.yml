@@ -12,7 +12,7 @@ extra:
       link: https://linkedin.com/in/mohammad-robot/
 
 theme:
-  name: material
+  name: jekyll-theme-minimal
   palette:
     # try other colors https://squidfunk.github.io/mkdocs-material/getting-started/#primary-colors
     primary: black 
