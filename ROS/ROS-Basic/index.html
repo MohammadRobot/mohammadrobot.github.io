@@ -1,0 +1,1457 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../ROS-2-Basic/">
+      
+      
+        <link rel="next" href="../scan/">
+      
+      
+      <link rel="icon" href="../../images/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>ROS - Mohammad_Robot</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Mohammad_Robot" class="md-header__button md-logo" aria-label="Mohammad_Robot" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mohammad_Robot
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ROS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Welcome to MkDocs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Porjects/CheckPointOne/" class="md-tabs__link">
+          
+  
+  Porjects
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Gazebo-Sim-Basics/" class="md-tabs__link">
+          
+  
+  ROS
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Mohammad_Robot" class="md-nav__button md-logo" aria-label="Mohammad_Robot" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
+
+    </a>
+    Mohammad_Robot
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to MkDocs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Porjects
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Porjects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Porjects/CheckPointOne/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROS MasterClass Checkpoint 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    ROS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            ROS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Gazebo-Sim-Basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gazebo Sim Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ROS-2-Basic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ROS 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    ROS
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    ROS
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ros-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS package
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS package">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compile a package
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#program-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Program file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmakelists-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      CMakeLists File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roscore
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rqt_graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      rqt_graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS Nodes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rostopic" class="md-nav__link">
+    <span class="md-ellipsis">
+      rostopic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Messages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to-ceate-custom-msg" class="md-nav__link">
+    <span class="md-ellipsis">
+      To ceate custom msg
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publisher-and-subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publisher and Subscriber
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publisher and Subscriber">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publisher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subscriber
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-clinet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Clinet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serveice-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serveice Server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS commands:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referaces
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scan/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scan
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../teleop/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Teleop
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ros-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS package
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS package">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a package
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compile a package
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS program
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ROS program">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#program-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Program file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmakelists-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      CMakeLists File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#launch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Launch file
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roscore
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rqt_graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      rqt_graph
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS Nodes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter Server
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rostopic" class="md-nav__link">
+    <span class="md-ellipsis">
+      rostopic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Messages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to-ceate-custom-msg" class="md-nav__link">
+    <span class="md-ellipsis">
+      To ceate custom msg
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publisher-and-subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publisher and Subscriber
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publisher and Subscriber">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publisher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subscriber
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Services
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-clinet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Clinet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serveice-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serveice Server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROS commands:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referaces
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="ros">ROS<a class="headerlink" href="#ros" title="Permanent link">&para;</a></h1>
+<p>ROS is basically the framework that allows us to do all that we showed along this chapter. It provides the background to manage all these processes and communications between them&hellip; and much, much more!! In this tutorial you&rsquo;ve just scratched the surface of ROS, the basic concepts. ROS is an extremely powerful tool. If you dive into our courses you&rsquo;ll learn much more about ROS and you&rsquo;ll find yourself able to do almost anything with your robots!</p>
+<h2 id="ros-package">ROS package<a class="headerlink" href="#ros-package" title="Permanent link">&para;</a></h2>
+<p>ROS uses packages to organize its programs. You can think of a package as all the files that a specific ROS program contains; all its cpp files, python files, configuration files, compilation files, launch files, and parameters files.</p>
+<p>All those files in the package are organized with the following structure:
+* launch folder: Contains launch files
+* src folder: Source files (cpp, python)
+* CMakeLists.txt: List of cmake rules for compilation
+* package.xml: Package information and dependencies</p>
+<p>To go to any ROS package, ROS gives you a command named roscd. When typing:</p>
+<p><code>$ roscd &lt;package_name&gt;</code></p>
+<p>All launch files are contained within a <launch> tag. Inside that tag, you can see a <node> tag, where we specify the following parameters:</p>
+<h3 id="create-a-package">Create a package<a class="headerlink" href="#create-a-package" title="Permanent link">&para;</a></h3>
+<p>When we want to create packages, we need to work in a very specific ROS workspace, which is known as the catkin workspace. The catkin workspace is the directory in your hard disk where your own ROS packages must reside in order to be usable by ROS. Usually, the catkin workspace directory is called catkin_ws.</p>
+<p><code>$ catkin_create_pkg &lt;package_name&gt; &lt;package_dependecies&gt;</code></p>
+<p>ex: <code>$ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp</code></p>
+<ul>
+<li><code>$ rospack list</code>: Gives you a list with all of the packages in your ROS system.</li>
+<li><code>$ rospack list | grep &lt;package_name&gt;</code>: Filters, from all of the packages located in the ROS system,the package named package_name.</li>
+<li><code>$ roscd package_name</code>: Takes you to the location in the Hard Drive of the package, named package_name</li>
+</ul>
+<h3 id="compile-a-package">Compile a package<a class="headerlink" href="#compile-a-package" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>$ cd ~/catkin_ws</code></li>
+<li><code>$ catkin_make</code></li>
+</ul>
+<p>After compiling, it&rsquo;s also very important to source your workspace. This will make sure that ROS will always get the latest changes done in your workspace.</p>
+<ul>
+<li><code>$ source devel/setup.bash</code></li>
+</ul>
+<h2 id="ros-program">ROS program<a class="headerlink" href="#ros-program" title="Permanent link">&para;</a></h2>
+<h3 id="program-file">Program file<a class="headerlink" href="#program-file" title="Permanent link">&para;</a></h3>
+<p>Create the programe file in <code>src</code> directory 
+* <code>$ touch src/&lt;program name&gt;.cpp</code></p>
+<h3 id="cmakelists-file">CMakeLists File<a class="headerlink" href="#cmakelists-file" title="Permanent link">&para;</a></h3>
+<p>Modify the CMakeLists.txt file in order to generate an executable from the C++ file you have just created.</p>
+<p>In the Build section of your CMakeLists.txt file, add the following lines:</p>
+<div class="codehilite"><pre><span></span><code>add_executable(&lt;node_name&gt; src/&lt;program name&gt;.cpp)
+add_dependencies(&lt;node_name&gt;  ${&lt;node_name&gt;_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(&lt;node_name&gt;  ${catkin_LIBRARIES})
+</code></pre></div>
+
+<p>Run the the following commands 
+* <code>$ cd ~/catkin_ws</code>
+* <code>$ catkin_make</code></p>
+<p>After compiling, it&rsquo;s also very important to source your workspace. This will make sure that ROS will always get the latest changes done in your workspace.</p>
+<ul>
+<li><code>$ source devel/setup.bash</code></li>
+</ul>
+<h3 id="launch-file">Launch file<a class="headerlink" href="#launch-file" title="Permanent link">&para;</a></h3>
+<p>Create launch direcotory and <strong>launch</strong> file whicg contain the following: 
+* pkg=&rdquo;package_name&rdquo; # Name of the package that contains the code of the ROS program to execute
+* type=&rdquo;cpp_executable_name&rdquo; # Name of the cpp executable file that we want to execute
+* name=&rdquo;node_name&rdquo; # Name of the ROS node that will launch our C++ file
+* output=&rdquo;type_of_output&rdquo; # Through which channel you will print the output of the program</p>
+<p>To create the launch file run the followin command 
+* <code>$ mkdir launch</code>
+* <code>$ touch launch/&lt;launch name&gt;.launch</code></p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;launch&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- My Package launch file --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">&quot;&lt;package_name&gt;&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;&lt;cpp_executable_name&gt;&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;&lt;node_name&gt;&quot;</span><span class="w">  </span><span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</code></pre></div>
+
+<h2 id="roscore">Roscore<a class="headerlink" href="#roscore" title="Permanent link">&para;</a></h2>
+<p>The roscore is the main process that manages all of the ROS system. You always need to have a roscore running in order to work with ROS. The command that launches a roscore is:
+* <code>$ roscore</code></p>
+<h2 id="rqt_graph">rqt_graph<a class="headerlink" href="#rqt_graph" title="Permanent link">&para;</a></h2>
+<h2 id="ros-nodes">ROS Nodes<a class="headerlink" href="#ros-nodes" title="Permanent link">&para;</a></h2>
+<p>ROS nodes are basically programs made in ROS. The ROS command to see what nodes are actually running in a computer is:</p>
+<ul>
+<li>
+<p><code>$ rosnode list</code></p>
+</li>
+<li>
+<p><code>$ rosndoe info /&lt;node_name&gt;</code></p>
+</li>
+</ul>
+<h2 id="parameter-server">Parameter Server<a class="headerlink" href="#parameter-server" title="Permanent link">&para;</a></h2>
+<p>Parameter Server is a dictionary that ROS uses to store parameters. These parameters can be used by nodes at runtime and are normally used for static data, such as configuration parameters.</p>
+<ul>
+<li><code>$ rosparam list</code></li>
+</ul>
+<p>To get a value of a particular parameter, you can type:
+ * <code>$rosparam get &lt;parameter_name&gt;</code></p>
+<p>And to set a value to a parameter, you can type:
+* <code>$ rosparam set &lt;parameter_name&gt; &lt;value&gt;</code></p>
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<p>ROS uses a set of Linux system environment variables in order to work properly. You can check these variables by typing:</p>
+<ul>
+<li><code>$ export | grep ROS</code></li>
+</ul>
+<p>The most important variables are the ROS_MASTER_URI and the ROS_PACKAGE_PATH.</p>
+<h2 id="rostopic">rostopic<a class="headerlink" href="#rostopic" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>rostopic list</p>
+<p>Display a list of current topics.</p>
+<div class="codehilite"><pre><span></span><code>$ rostopic list
+</code></pre></div>
+
+</li>
+<li>
+<p>rostopic echo</p>
+<p>Display messages published to a topic.</p>
+<div class="codehilite"><pre><span></span><code>$ rostopic echo /&lt;topic_name&gt;
+</code></pre></div>
+
+</li>
+<li>
+<p>To get information about a certain topic</p>
+<div class="codehilite"><pre><span></span><code>$ rostopic info &lt;topic_name&gt;
+</code></pre></div>
+
+</li>
+<li>
+<p>To  publish specify message with the value you and the topic you specify.</p>
+<div class="codehilite"><pre><span></span><code>$ rostopic pub &lt;topic_name&gt; &lt;message_type&gt; &lt;value&gt;
+</code></pre></div>
+
+</li>
+</ol>
+<p>For more information visit: http://wiki.ros.org/rostopic </p>
+<h2 id="messages">Messages<a class="headerlink" href="#messages" title="Permanent link">&para;</a></h2>
+<p>ROS provides a lot of different messages. You can even create your own messages, but it is recommended to use ROS default messages when its possible.</p>
+<p>Messages are defined in .msg files, which are located inside a msg directory of a package.</p>
+<div class="codehilite"><pre><span></span><code>    $ rosmsh list
+</code></pre></div>
+
+<p>To show one msg type </p>
+<div class="codehilite"><pre><span></span><code>    $ rosmsg show &lt;message_name&gt;
+</code></pre></div>
+
+<h3 id="to-ceate-custom-msg">To ceate custom msg<a class="headerlink" href="#to-ceate-custom-msg" title="Permanent link">&para;</a></h3>
+<h2 id="publisher-and-subscriber">Publisher and Subscriber<a class="headerlink" href="#publisher-and-subscriber" title="Permanent link">&para;</a></h2>
+<p>For more information visit: http://wiki.ros.org/roscpp_tutorials/Tutorials/WritingPublisherSubscriber</p>
+<h3 id="publisher">Publisher<a class="headerlink" href="#publisher" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ros/ros.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;std_msgs/Int32.h&gt;</span>
+<span class="c1">// Import all the necessary ROS libraries and import the Int32 message from the std_msgs package</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;topic_publisher&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Initiate a Node named &#39;topic_publisher&#39;</span>
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="w"> </span><span class="n">nh</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Create a Publisher object, that willpublish on the counter topic messages of type Int32</span>
+
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span><span class="w"> </span><span class="n">pub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">std_msgs</span><span class="o">::</span><span class="n">Int32</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">Rate</span><span class="w"> </span><span class="n">loop_rate</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// Set a publish rate of 2 Hz</span>
+
+<span class="w">    </span><span class="n">std_msgs</span><span class="o">::</span><span class="n">Int32</span><span class="w"> </span><span class="n">count</span><span class="p">;</span><span class="w"> </span><span class="c1">// Create a variable of type Int32</span>
+<span class="w">    </span><span class="n">count</span><span class="p">.</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Initialize &#39;count&#39; variable</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">())</span><span class="w"> </span><span class="c1">// Create a loop that will go until someone stops the program execution</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pub</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">count</span><span class="p">);</span><span class="w"> </span><span class="c1">// Publish the message within the &#39;count&#39; variable</span>
+<span class="w">        </span><span class="n">ros</span><span class="o">::</span><span class="n">spinOnce</span><span class="p">();</span>
+<span class="w">        </span><span class="n">loop_rate</span><span class="p">.</span><span class="n">sleep</span><span class="p">();</span><span class="w"> </span><span class="c1">// Make sure the publish rate maintains at 2 Hz</span>
+<span class="w">        </span><span class="o">++</span><span class="n">count</span><span class="p">.</span><span class="n">data</span><span class="p">;</span><span class="w"> </span><span class="c1">// Increment &#39;count&#39; variable</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="subscriber">Subscriber<a class="headerlink" href="#subscriber" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ros/ros.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;std_msgs/Int32.h&gt;</span>
+
+<span class="c1">// Define a function called &#39;callback&#39; that receives a parameter named &#39;msg&#39; </span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">counterCallback</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std_msgs</span><span class="o">::</span><span class="n">Int32</span><span class="o">::</span><span class="n">ConstPtr</span><span class="o">&amp;</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span><span class="w"> </span><span class="c1">// Print the value &#39;data&#39; inside the &#39;msg&#39; parameter</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// Initiate a Node called &#39;topic_subscriber&#39;</span>
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;topic_subscriber&quot;</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="w"> </span><span class="n">nh</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Create a Subscriber object that will</span>
+<span class="w">    </span><span class="c1">// listen to the /counter topic and will call the &#39;callback&#39; function each time</span>
+<span class="w">    </span><span class="c1">// it reads something from the topic</span>
+
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span><span class="w"> </span><span class="n">sub</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="n">counterCallback</span><span class="p">);</span><span class="w">                                                                     </span>
+
+<span class="w">    </span><span class="n">ros</span><span class="o">::</span><span class="n">spin</span><span class="p">();</span><span class="w"> </span><span class="c1">// Create a loop that will keep the program in execution</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="services">Services<a class="headerlink" href="#services" title="Permanent link">&para;</a></h2>
+<p>A ROS Service provides a certain functionality to your robot. A ROS Service is composed of two parts:</p>
+<p>Service Server: It is the one that PROVIDES the functionality. Whatever you want your Service to do, you have to place it in the Service Server.</p>
+<p>Service Client: It is the one that CALLS the functionality provided by the Service Server. That is, it CALLS the Service Server.</p>
+<p>ROS Services use a special service message, which is composed of two parts:</p>
+<p>Request: The request is the part of the message that is used to CALL the Service. Therefore, it is sent by the Service Client to the Service Server.</p>
+<p>Response: The response is the part of the message that is returned by the Service Server to the Service Client, once the Service has finished.</p>
+<p>ROS Services are synchronous. This means that whenever you CALL a Service Server, you have to wait until the Service has finished (and returns a response) before you can do other stuff with your robot.</p>
+<p>Call Serveice </p>
+<div class="codehilite"><pre><span></span><code>$ rosservice call /the_service_name TAB-TAB
+
+$ rosservice info /name_of_the_service
+
+$ rossrv show name_of_the_package/Name_of_Service_message
+</code></pre></div>
+
+<h3 id="service-clinet">Service Clinet<a class="headerlink" href="#service-clinet" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ros/ros.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;trajectory_by_name_srv/TrajByName.h&quot;</span>
+<span class="c1">// Import the service message used by the service /trajectory_by_name</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;service_client&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Initialise a ROS node with the name service_client</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="w"> </span><span class="n">nh</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Create the connection to the service /trajectory_by_name</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">service</span><span class="o">::</span><span class="n">waitForService</span><span class="p">(</span><span class="s">&quot;/trajectory_by_name&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// wait for service to be running</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">ServiceClient</span><span class="w"> </span><span class="n">traj_by_name_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nh</span><span class="p">.</span><span class="n">serviceClient</span><span class="o">&lt;</span><span class="n">trajectory_by_name_srv</span><span class="o">::</span><span class="n">TrajByName</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;/trajectory_by_name&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">trajectory_by_name_srv</span><span class="o">::</span><span class="n">TrajByName</span><span class="w"> </span><span class="n">srv</span><span class="p">;</span><span class="w"> </span><span class="c1">// Create an object of type TrajByName</span>
+<span class="w">  </span><span class="n">srv</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">traj_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;release_food&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Fill the variable traj_name with the desired value</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">traj_by_name_service</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="n">srv</span><span class="p">))</span><span class="w"> </span><span class="c1">// Send through the connection the name of the trajectory to execute</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">srv</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">status_message</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span><span class="w"> </span><span class="c1">// Print the result given by the service called</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;Failed to call service /trajectory_by_name&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="serveice-server">Serveice Server<a class="headerlink" href="#serveice-server" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;ros/ros.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;std_srvs/Empty.h&quot;</span>
+<span class="c1">// Import the service message header file generated from the Empty.srv message</span>
+
+<span class="c1">// We define the callback function of the service</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">std_srvs</span><span class="o">::</span><span class="n">Empty</span><span class="o">::</span><span class="n">Request</span><span class="w">  </span><span class="o">&amp;</span><span class="n">req</span><span class="p">,</span>
+<span class="w">                 </span><span class="n">std_srvs</span><span class="o">::</span><span class="n">Empty</span><span class="o">::</span><span class="n">Response</span><span class="w"> </span><span class="o">&amp;</span><span class="n">res</span><span class="p">)</span>
+<span class="p">{</span><span class="w">  </span>
+<span class="w">  </span><span class="c1">// res.some_variable = req.some_variable + req.other_variable;</span>
+<span class="w">  </span><span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;My_callback has been called&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// We print an string whenever the Service gets called</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;service_server&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="w"> </span><span class="n">nh</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">ServiceServer</span><span class="w"> </span><span class="n">my_service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nh</span><span class="p">.</span><span class="n">advertiseService</span><span class="p">(</span><span class="s">&quot;/my_service&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">my_callback</span><span class="p">);</span><span class="w"> </span><span class="c1">// create the Service called                                                                                          // my_service with the defined                                                                                        // callback</span>
+<span class="w">  </span><span class="n">ros</span><span class="o">::</span><span class="n">spin</span><span class="p">();</span><span class="w"> </span><span class="c1">// mantain the service open.</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="ros-commands">ROS commands:<a class="headerlink" href="#ros-commands" title="Permanent link">&para;</a></h2>
+<p><code>rosrun</code>: ROS command that allows you to run a ROS program without having to create a launch file to launch it (it is a different way from what we&rsquo;ve been doing here).</p>
+<h2 id="referaces">Referaces<a class="headerlink" href="#referaces" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.theconstruct.ai/">theconstruct.ai</a></p>
+<p>ROS Packages: http://wiki.ros.org/Packages</p>
+<p>Ros Nodes: http://wiki.ros.org/Nodes</p>
+<p>Parameter Server: http://wiki.ros.org/Parameter%20Server</p>
+<p>Roscore: http://wiki.ros.org/roscore</p>
+<p>ROS Environment Variables: http://wiki.ros.org/ROS/EnvironmentVariables</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 14, 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://instagram.com/mohammad_robot" target="_blank" rel="noopener" title="instagram.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://facebook.com/Mohammad.Robot" target="_blank" rel="noopener" title="facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/mohammad_robot" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/in/mohammad-robot/" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.instant", "navigation.instant.progress"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
