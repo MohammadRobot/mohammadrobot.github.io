@@ -1,4 +1,2 @@
 # mohammadrobot.github.io
-my Github website
-
-Hellow Robot 
+my Github website: https://mohammadrobot.github.io
