@@ -13,6 +13,14 @@ Mohammad Alshamsi is an accomplished Emirati engineer, robotics expert, and inno
 Mohammad holds a Bachelor’s degree in Engineering Management and a Diploma in Mechatronics Engineering Technology from the Higher College of Technology in Dubai. He has been recognized globally, serving as an expert and chief expert in mobile robotics for the WorldSkills International Competition, and has won multiple prestigious awards, including the GCC Medal and the UAE Pioneers recognition as the first Emirati international robotics expert. His passion for innovation is reflected in his active involvement in various national and international competitions, where he has both competed and judged.
 Mohammad is a leader known for his critical thinking, team motivation, and dedication to technological advancement. His work not only aims to elevate the standards of robotics but also inspires the next generation of scientists and engineers.
 
+## AI in Robotics (Book)
+
+أكتب حالياً كتاب **AI in Robotics** عن تطبيقات الذكاء الاصطناعي في الروبوتات (الإدراك، التخطيط، التحكم، التعلم، والتطبيقات العملية).
+
+I’m writing a book called **AI in Robotics** about applying AI in robotics (perception, planning, control, learning, and real-world practice).
+
+- Book page: [AI in Robotics](./Book/AI-in-Robotics.md)
+
 
 - [instagram](https://instagram.com/mohammad_robot)
 - [facebook](https://facebook.com/Mohammad.Robot)
