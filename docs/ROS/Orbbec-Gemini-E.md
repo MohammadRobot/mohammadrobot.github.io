@@ -231,6 +231,26 @@ ros2 topic hz /camera/depth/image_raw
 ros2 topic hz /camera/color/image_raw
 ```
 
+### RViz examples
+
+The following screenshots are representative RViz views from the local Orbbec ROS 2 wrapper documentation. They are useful as visual references when bringing the camera up for the first time.
+
+![RViz depth stream example](../images/orbbec-gemini-e/rviz-depth-streams.jpg){ width="1000" }
+
+Depth and image streams visible in RViz. This is the kind of view you want during first bring-up when verifying that the camera is publishing stable image data.
+
+![RViz depth point cloud example](../images/orbbec-gemini-e/rviz-depth-point-cloud.jpg){ width="1000" }
+
+Depth point cloud view in RViz using `/camera/depth/points`. This is useful for validating geometry, floor visibility, and TF orientation.
+
+![RViz aligned RGB-D example](../images/orbbec-gemini-e/rviz-aligned-rgbd.jpg){ width="760" }
+
+Aligned RGB-D style output in RViz. This is the kind of image you should expect when `depth_registration:=true` is enabled and you are checking whether depth correctly overlays the color image.
+
+![RViz colored point cloud example](../images/orbbec-gemini-e/rviz-colored-point-cloud.jpg){ width="1000" }
+
+Colored point cloud in RViz using `/camera/depth_registered/points`. Use this when the downstream stack truly needs fused color and 3D structure.
+
 ## 8. Core topics you will actually use
 
 | Topic | Use |
