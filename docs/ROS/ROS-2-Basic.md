@@ -12,27 +12,28 @@ around the world
 
 ## Simulation 
 
-craete an accont on : [https://www.theconstruct.ai](https://www.theconstruct.ai)
+Create an account on [The Construct](https://www.theconstruct.ai).
 
-Open the Rosjects: [https://app.theconstruct.ai/l/6400c71b](https://app.theconstruct.ai/l/68d8cb66/)
+Open the rosject: [https://app.theconstruct.ai/l/68d8cb66/](https://app.theconstruct.ai/l/68d8cb66/)
 
 
-update the system
+Update the system:
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
 
-install ROS2 Humble [https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
+Install ROS 2 Humble:
+[https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
 
-clone project
+Clone the project:
 ```bash
 cd ~/ros2_ws/src
 git clone https://github.com/MohammadRobot/vmxpi_ros2.git
 ```
 
-build project 
+Build the project:
 ```bash
 cd ~/ros2_ws && colcon build --packages-select vmxpi_ros2 && source install/setup.bash
 ```
@@ -43,20 +44,20 @@ To launch the simulation with Gazebo:
 ros2 launch vmxpi_ros2 diffbot_gazebo_classic.launch.py gui:=true use_gazebo_classic:=true
 ```
 
-To conrol the robot by Keyboard run the following command in the new termnial 
+To control the robot by keyboard, run the following command in a new terminal:
 ```bash
-os2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=True --remap cmd_vel:=/diffbot_base_controller/cmd_vel
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=True --remap cmd_vel:=/diffbot_base_controller/cmd_vel
 ```
 
 
-if not moving run the following command 
+If the robot is not moving, run:
 
 ```bash
 sudo apt update
 sudo apt install ros-humble-teleop-twist-keyboard
 ```
 
-you must get ros-humble-teleop-twist-keyboard version (2.4.0) or newer
+You should have `ros-humble-teleop-twist-keyboard` version `2.4.0` or newer.
 
 ## ROS 2 package
 
@@ -76,7 +77,7 @@ Go to ROS2 Workspace:
 ```bash
 cd ~/ros2_ws/src
 ```
-Create Package by runing this command:
+Create the package by running:
 ```bash
 ros2 pkg create topic_publisher_pkg --build-type ament_cmake --dependencies rclcpp std_msgs
 ```
@@ -98,7 +99,7 @@ ros2 pkg list
 
 ### Launch File
 
-To run ROS 2 program you can use launch file the by runing the following command: 
+To run a ROS 2 program with a launch file, use:
 
 ```bash
 ros2 launch <package_name> <launch_file>
@@ -137,16 +138,17 @@ cd ~/ros2_ws/src/topic_publisher_pkg/src
 touch simple_topic_publisher.cpp
 ```
 
-Copy the following code: 
+Copy the following code:
 
 ```cpp
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/int32.hpp"
 #include <chrono>
+#include <functional>
 
 using namespace std::chrono_literals;
 
-/* This example creates a MohammadRobot
+// This example creates a simple ROS 2 publisher node.
 class SimplePublisher : public rclcpp::Node
 {
 public:
@@ -182,9 +184,9 @@ int main(int argc, char * argv[])
 ```
 
 
-### CMakeLists.txt file  
+### CMakeLists.txt file
 
-add the following code to  CMakeLists.txt befor `ament_package()` line
+Add the following code to `CMakeLists.txt` before the `ament_package()` line:
 
 ```cmake
 add_executable(simple_publisher_node src/simple_topic_publisher.cpp)
@@ -204,7 +206,7 @@ install(DIRECTORY
 # ament_package()
 ```
 
-### Compiling the package 
+### Compiling the package
 
 To compile the package run the following command:
 ```bash
@@ -216,20 +218,23 @@ source install/setup.bash
 
 ##  Visualize Data
 
-### RVIZ 
-To open rviz run the following commmad 
+### RVIZ
+
+To open RViz, run:
 ```bash
 rviz2
 ```
-### rqt_graph 
-To open rqt_graph  run the following commmad 
+
+### rqt_graph
+
+To open `rqt_graph`, run:
 ```bash
 rqt_graph 
 ```
 
 
 
-## Referaces 
+## References
 
 - [theconstruct.ai](https://www.theconstruct.ai/)
 - [docs.ros.org](https://docs.ros.org)

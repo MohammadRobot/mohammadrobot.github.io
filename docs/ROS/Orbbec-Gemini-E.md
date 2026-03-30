@@ -1,6 +1,6 @@
 # Orbbec Gemini E for Robotics
 
-This guide is a practical training document for using the Orbbec Gemini E in robotics projects with ROS 2 and the local `OrbbecSDK_ROS2` wrapper in `~/ros2_ws/src/OrbbecSDK_ROS2`.
+This guide is a practical training document for using the Orbbec Gemini E in robotics projects with ROS 2 and the `OrbbecSDK_ROS2` wrapper.
 
 The focus here is not just "how to make the camera work", but how to use it correctly on a robot: where it fits, where it does not, how to tune it for low latency, and how to avoid the common mistakes that waste integration time.
 
@@ -134,7 +134,7 @@ Rear view showing the USB Type-C interface and rear fastener locations.
 
 ## 5. ROS 2 stack used in this workspace
 
-This workspace already contains the Orbbec ROS 2 wrapper:
+This guide assumes the Orbbec ROS 2 wrapper is available in a workspace such as:
 
 - `~/ros2_ws/src/OrbbecSDK_ROS2`
 

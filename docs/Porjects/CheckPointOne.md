@@ -1,7 +1,7 @@
 
 # ROS MasterClass Checkpoint 1
 
-This project is for ROS MasterClass from [theconstruct.ai](theconstruct.ai) and for the full Souuce code checkout [my_rb1_robot ](https://github.com/MohammadRobot/my_rb1_robot) repositories
+This project is for the ROS MasterClass from [The Construct](https://www.theconstruct.ai) and uses the [my_rb1_robot](https://github.com/MohammadRobot/my_rb1_robot) repository as the source code reference.
 
 ### Task 1   Build RB1 URDF Replica 
 
@@ -48,7 +48,7 @@ Caster Wheel = m=1 r=0.03
 ```xml
 <?xml version="1.0"?>
 <launch>
-  <param name="my_rb1_description" command="cat '$(find my_rb1_description)/urdf/my_rb1_robot.urdf'"/>
+  <param name="robot_description" command="cat '$(find my_rb1_description)/urdf/my_rb1_robot.urdf'"/>
   <!-- send fake joint values -->
   <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
   <!-- Combine joint values -->
@@ -238,4 +238,3 @@ To chage the color of the robot in Gazebo add the following to URDF file
 ### Referance 
 
 - For Git commnad check [Git Cheat Sheets](https://training.github.com/downloads/github-git-cheat-sheet/ )
-
