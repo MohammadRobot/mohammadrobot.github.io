@@ -11,6 +11,7 @@ nav:
   - ROS:
       - ROS Basic: ROS/ROS-Basic.md
       - ROS 2 Basic: ROS/ROS-2-Basic.md
+      - Orbbec Gemini E: ROS/Orbbec-Gemini-E.md
       - Gazebo Sim Basics: ROS/Gazebo-Sim-Basics.md
       - Teleop: ROS/teleop.md
       - WSL: ROS/WSL.md
