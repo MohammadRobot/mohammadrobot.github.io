@@ -14,6 +14,7 @@ nav:
       - Orbbec Gemini E: ROS/Orbbec-Gemini-E.md
       - YDLIDAR T-mini: ROS/YDLIDAR-T-mini.md
       - Gazebo Sim Basics: ROS/Gazebo-Sim-Basics.md
+      - Blender CAD Mesh Workflow: ROS/Blender-CAD-Meshes.md
       - Teleop: ROS/teleop.md
       - WSL: ROS/WSL.md
       - Linux: ROS/Linex.md
