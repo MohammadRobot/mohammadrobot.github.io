@@ -9,18 +9,15 @@ nav:
   - Projects:
       - ROS MasterClass Checkpoint 1: Porjects/CheckPointOne.md
   - ROS:
-      - ROS Basic: ROS/ROS-Basic.md
       - ROS 2 Basic: ROS/ROS-2-Basic.md
+      - Gazebo Sim Harmonic + Humble: ROS/Gazebo-Sim-Harmonic-Humble.md
       - ROS 2 Control: ROS/ROS-2-Control.md
       - Orbbec Gemini E: ROS/Orbbec-Gemini-E.md
       - YDLIDAR T-mini: ROS/YDLIDAR-T-mini.md
-      - Gazebo Sim Basics: ROS/Gazebo-Sim-Basics.md
       - Blender CAD Mesh Workflow: ROS/Blender-CAD-Meshes.md
-      - Teleop: ROS/teleop.md
       - WSL: ROS/WSL.md
       - Linux: ROS/Linex.md
       - CUDA: ROS/cuda.md
-      - Scan: ROS/scan.md
 
 extra:
   social:
