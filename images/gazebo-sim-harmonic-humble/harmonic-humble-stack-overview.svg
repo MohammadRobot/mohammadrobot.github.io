@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Gazebo Harmonic with ROS 2 Humble stack overview</title>
+  <desc id="desc">Diagram showing Ubuntu Jammy with ROS 2 Humble, Gazebo Harmonic, ros_gz bridge, ros2_control, and downstream tools.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f5f1; }
+      .title { font: 700 34px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .subtitle { font: 500 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #374151; }
+      .label { font: 700 20px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .text { font: 500 15px "Ubuntu", "DejaVu Sans", sans-serif; fill: #1f2937; }
+      .small { font: 500 14px "Ubuntu", "DejaVu Sans", sans-serif; fill: #4b5563; }
+      .os { fill: #fef3c7; stroke: #d97706; stroke-width: 2.5; }
+      .ros { fill: #dbeafe; stroke: #2563eb; stroke-width: 2.5; }
+      .sim { fill: #dcfce7; stroke: #16a34a; stroke-width: 2.5; }
+      .bridge { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2.5; }
+      .control { fill: #fee2e2; stroke: #dc2626; stroke-width: 2.5; }
+      .tool { fill: #e5e7eb; stroke: #4b5563; stroke-width: 2.5; }
+      .arrowBlue { stroke: #2563eb; stroke-width: 4; fill: none; marker-end: url(#arrowBlue); }
+      .arrowGreen { stroke: #16a34a; stroke-width: 4; fill: none; marker-end: url(#arrowGreen); }
+      .arrowPurple { stroke: #7c3aed; stroke-width: 4; fill: none; marker-end: url(#arrowPurple); }
+      .arrowRed { stroke: #dc2626; stroke-width: 4; fill: none; marker-end: url(#arrowRed); }
+      .arrowGray { stroke: #4b5563; stroke-width: 4; fill: none; marker-end: url(#arrowGray); }
+      .dash { stroke-dasharray: 10 8; }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="700"/>
+  <text class="title" x="55" y="62">Gazebo Harmonic + ROS 2 Humble Stack</text>
+  <text class="subtitle" x="55" y="93">Non-default pairing: Harmonic simulator with Humble ROS graph, bridged topics, and optional ros2_control simulation plugin.</text>
+
+  <rect class="os" x="55" y="140" width="250" height="140" rx="22"/>
+  <text class="label" x="80" y="182">Ubuntu 22.04</text>
+  <text class="text" x="80" y="215">Jammy host OS</text>
+  <text class="text" x="80" y="242">packages.osrfoundation.org repo</text>
+
+  <rect class="ros" x="355" y="140" width="250" height="140" rx="22"/>
+  <text class="label" x="380" y="182">ROS 2 Humble</text>
+  <text class="text" x="380" y="215">ros2 launch / ros2 topic / ros2 control</text>
+  <text class="text" x="380" y="242">Node graph + tools</text>
+
+  <rect class="sim" x="655" y="140" width="250" height="140" rx="22"/>
+  <text class="label" x="680" y="182">Gazebo Harmonic</text>
+  <text class="text" x="680" y="215">gz sim</text>
+  <text class="text" x="680" y="242">worlds, physics, sensors</text>
+
+  <rect class="bridge" x="955" y="140" width="190" height="140" rx="22"/>
+  <text class="label" x="980" y="182">ros_gz</text>
+  <text class="text" x="980" y="215">parameter_bridge</text>
+  <text class="text" x="980" y="242">/scan /clock topics</text>
+
+  <rect class="control" x="355" y="350" width="340" height="175" rx="22"/>
+  <text class="label" x="380" y="392">gz_ros2_control</text>
+  <text class="text" x="380" y="425">URDF &lt;ros2_control&gt; + Gazebo plugin</text>
+  <text class="text" x="380" y="452">controller_manager inside simulation</text>
+  <text class="text" x="380" y="479">diff drive / arm controllers</text>
+  <text class="small" x="380" y="507">For Harmonic+Humble, usually built from source with GZ_VERSION=harmonic.</text>
+
+  <rect class="tool" x="745" y="350" width="400" height="175" rx="22"/>
+  <text class="label" x="770" y="392">Downstream Tools</text>
+  <text class="text" x="770" y="425">RViz, Nav2, SLAM Toolbox, MoveIt</text>
+  <text class="text" x="770" y="452">Consume bridged and controller topics</text>
+  <text class="text" x="770" y="479">Use /clock simulation time</text>
+
+  <rect class="tool" x="55" y="350" width="250" height="175" rx="22"/>
+  <text class="label" x="80" y="392">Validation</text>
+  <text class="text" x="80" y="425">gz sim --versions</text>
+  <text class="text" x="80" y="452">ros2 pkg list | rg ros_gz</text>
+  <text class="text" x="80" y="479">ros2 control list_controllers</text>
+
+  <path class="arrowBlue" d="M305 210 L355 210"/>
+  <path class="arrowGreen" d="M605 210 L655 210"/>
+  <path class="arrowPurple" d="M905 210 L955 210"/>
+  <path class="arrowRed dash" d="M780 280 C780 320, 690 340, 695 390"/>
+  <path class="arrowGray" d="M695 438 L745 438"/>
+  <path class="arrowGray dash" d="M955 260 C1005 300, 1010 330, 1010 350"/>
+  <path class="arrowGray dash" d="M355 438 L305 438"/>
+
+  <text class="small" x="315" y="198">OS foundation</text>
+  <text class="small" x="616" y="198">launch + nodes</text>
+  <text class="small" x="915" y="198">topic bridge</text>
+  <text class="small" x="716" y="317">control plugin in sim</text>
+</svg>

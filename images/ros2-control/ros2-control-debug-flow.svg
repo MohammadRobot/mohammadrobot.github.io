@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">ros2_control debugging flow</title>
+  <desc id="desc">Step-by-step debugging flow for ros2_control covering robot description, hardware components, interfaces, controller activation, command topic, and feedback outputs.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f5ef; }
+      .title { font: 700 34px "Ubuntu", "DejaVu Sans", sans-serif; fill: #171717; }
+      .subtitle { font: 500 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #3f3f46; }
+      .label { font: 700 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .text { font: 500 15px "Ubuntu", "DejaVu Sans", sans-serif; fill: #1f2937; }
+      .small { font: 500 13px "Ubuntu", "DejaVu Sans", sans-serif; fill: #4b5563; }
+      .step1 { fill: #dbeafe; stroke: #2563eb; stroke-width: 2.5; }
+      .step2 { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2.5; }
+      .step3 { fill: #dcfce7; stroke: #16a34a; stroke-width: 2.5; }
+      .step4 { fill: #fef3c7; stroke: #d97706; stroke-width: 2.5; }
+      .step5 { fill: #fee2e2; stroke: #dc2626; stroke-width: 2.5; }
+      .arrow { stroke: #111827; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#111827"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="520"/>
+
+  <text class="title" x="60" y="64">ros2_control Debugging Flow</text>
+  <text class="subtitle" x="60" y="96">When the robot does not move, debug in this order. Most failures are name mismatches or missing interfaces, not controller math.</text>
+
+  <rect class="step1" x="60" y="165" width="190" height="220" rx="22"/>
+  <text class="label" x="84" y="202">1. URDF</text>
+  <text class="text" x="84" y="236">Does the robot load?</text>
+  <text class="small" x="84" y="272">Check joint names</text>
+  <text class="small" x="84" y="298">Check `&lt;ros2_control&gt;`</text>
+  <text class="small" x="84" y="324">Check robot description topic</text>
+
+  <rect class="step2" x="285" y="165" width="190" height="220" rx="22"/>
+  <text class="label" x="309" y="202">2. Hardware</text>
+  <text class="text" x="309" y="236">Did the plugin load?</text>
+  <text class="small" x="309" y="272">`list_hardware_components`</text>
+  <text class="small" x="309" y="298">Active or inactive?</text>
+  <text class="small" x="309" y="324">Any plugin errors?</text>
+
+  <rect class="step3" x="510" y="165" width="190" height="220" rx="22"/>
+  <text class="label" x="534" y="202">3. Interfaces</text>
+  <text class="text" x="534" y="236">Are they exported?</text>
+  <text class="small" x="534" y="272">`list_hardware_interfaces`</text>
+  <text class="small" x="534" y="298">position / velocity / effort</text>
+  <text class="small" x="534" y="324">Names match controller needs</text>
+
+  <rect class="step4" x="735" y="165" width="190" height="220" rx="22"/>
+  <text class="label" x="759" y="202">4. Controllers</text>
+  <text class="text" x="759" y="236">Did they activate?</text>
+  <text class="small" x="759" y="272">`list_controllers`</text>
+  <text class="small" x="759" y="298">Use the right controller type</text>
+  <text class="small" x="759" y="324">Start broadcaster first</text>
+
+  <rect class="step5" x="960" y="165" width="180" height="220" rx="22"/>
+  <text class="label" x="984" y="202">5. Outputs</text>
+  <text class="text" x="984" y="236">Does feedback move?</text>
+  <text class="small" x="984" y="272">Publish a test command</text>
+  <text class="small" x="984" y="298">Check `/joint_states`</text>
+  <text class="small" x="984" y="324">Check `/odom` and TF</text>
+
+  <path class="arrow" d="M 250 275 L 285 275"/>
+  <path class="arrow" d="M 475 275 L 510 275"/>
+  <path class="arrow" d="M 700 275 L 735 275"/>
+  <path class="arrow" d="M 925 275 L 960 275"/>
+
+  <text class="small" x="60" y="445">Practical rule: do not tune controllers until URDF, interfaces, and activation state are correct.</text>
+</svg>

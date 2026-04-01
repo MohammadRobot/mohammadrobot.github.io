@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">ros2_control differential drive bring-up</title>
+  <desc id="desc">Diagram showing a minimal differential drive ros2_control setup from URDF and YAML into spawners, runtime nodes, and outputs.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f6f2; }
+      .title { font: 700 34px "Ubuntu", "DejaVu Sans", sans-serif; fill: #171717; }
+      .subtitle { font: 500 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #3f3f46; }
+      .label { font: 700 20px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .text { font: 500 16px "Ubuntu", "DejaVu Sans", sans-serif; fill: #1f2937; }
+      .small { font: 500 14px "Ubuntu", "DejaVu Sans", sans-serif; fill: #4b5563; }
+      .urdf { fill: #dbeafe; stroke: #2563eb; stroke-width: 2.5; }
+      .yaml { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2.5; }
+      .runtime { fill: #dcfce7; stroke: #16a34a; stroke-width: 2.5; }
+      .robot { fill: #fef3c7; stroke: #d97706; stroke-width: 2.5; }
+      .out { fill: #fee2e2; stroke: #dc2626; stroke-width: 2.5; }
+      .arrowBlue { stroke: #2563eb; stroke-width: 4; fill: none; marker-end: url(#arrowBlue); }
+      .arrowPurple { stroke: #7c3aed; stroke-width: 4; fill: none; marker-end: url(#arrowPurple); }
+      .arrowGreen { stroke: #16a34a; stroke-width: 4; fill: none; marker-end: url(#arrowGreen); }
+      .arrowOrange { stroke: #d97706; stroke-width: 4; fill: none; marker-end: url(#arrowOrange); }
+      .arrowRed { stroke: #dc2626; stroke-width: 4; fill: none; marker-end: url(#arrowRed); }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="760"/>
+
+  <text class="title" x="60" y="64">Minimal Differential Drive Bring-up</text>
+  <text class="subtitle" x="60" y="96">A practical ros2_control path: robot description plus controller YAML into controller_manager, then spawn the broadcaster and drive controller, then verify the outputs.</text>
+
+  <rect class="urdf" x="60" y="150" width="320" height="190" rx="24"/>
+  <text class="label" x="86" y="192">URDF / Xacro</text>
+  <text class="text" x="86" y="230">`left_wheel_joint`</text>
+  <text class="text" x="86" y="258">`right_wheel_joint`</text>
+  <text class="text" x="86" y="286">`base_link`</text>
+  <text class="small" x="86" y="320">Contains the `&lt;ros2_control&gt;` block</text>
+
+  <rect class="yaml" x="60" y="410" width="320" height="190" rx="24"/>
+  <text class="label" x="86" y="452">Controller YAML</text>
+  <text class="text" x="86" y="490">`joint_state_broadcaster`</text>
+  <text class="text" x="86" y="518">`diff_drive_controller`</text>
+  <text class="text" x="86" y="546">wheel radius and separation</text>
+  <text class="small" x="86" y="580">Names must match the URDF exactly</text>
+
+  <rect class="runtime" x="455" y="180" width="300" height="180" rx="24"/>
+  <text class="label" x="481" y="222">Runtime Nodes</text>
+  <text class="text" x="481" y="260">`robot_state_publisher`</text>
+  <text class="text" x="481" y="288">`ros2_control_node`</text>
+  <text class="text" x="481" y="316">hardware plugin loaded here</text>
+
+  <rect class="runtime" x="455" y="435" width="300" height="165" rx="24"/>
+  <text class="label" x="481" y="477">Spawner Commands</text>
+  <text class="text" x="481" y="515">`spawner joint_state_broadcaster`</text>
+  <text class="text" x="481" y="543">`spawner diff_drive_controller`</text>
+  <text class="small" x="481" y="575">Load, configure, activate</text>
+
+  <rect class="robot" x="840" y="160" width="300" height="220" rx="24"/>
+  <text class="label" x="866" y="202">Robot Base</text>
+  <text class="text" x="866" y="240">Left and right wheel actuators</text>
+  <text class="text" x="866" y="268">Encoders or simulated joint states</text>
+  <text class="text" x="866" y="296">Real robot, mock system, or Gazebo</text>
+
+  <rect class="out" x="840" y="450" width="300" height="190" rx="24"/>
+  <text class="label" x="866" y="492">Outputs to Check</text>
+  <text class="text" x="866" y="530">`/joint_states`</text>
+  <text class="text" x="866" y="558">`/odom`</text>
+  <text class="text" x="866" y="586">TF: `odom -> base_link`</text>
+  <text class="text" x="866" y="614">`/diff_drive_controller/cmd_vel`</text>
+
+  <path class="arrowBlue" d="M 380 245 L 455 245"/>
+  <path class="arrowPurple" d="M 380 505 L 455 505"/>
+  <path class="arrowGreen" d="M 755 270 L 840 270"/>
+  <path class="arrowGreen" d="M 755 515 C 810 515, 790 548, 840 548"/>
+  <path class="arrowOrange" d="M 990 380 L 990 450"/>
+  <path class="arrowRed" d="M 1140 548 C 1170 548, 1170 115, 605 115 C 448 115, 448 150, 455 180"/>
+
+  <text class="small" x="392" y="231">robot description</text>
+  <text class="small" x="392" y="491">controller parameters</text>
+  <text class="small" x="768" y="256">read and write interfaces</text>
+  <text class="small" x="771" y="502">load controllers</text>
+  <text class="small" x="1004" y="418">state and odometry</text>
+  <text class="small" x="786" y="132">closed loop: outputs should match your command path</text>
+</svg>

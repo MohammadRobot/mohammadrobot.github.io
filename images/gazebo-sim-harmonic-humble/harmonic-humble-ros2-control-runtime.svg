@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">ros2_control runtime in Gazebo Harmonic</title>
+  <desc id="desc">Data flow diagram from cmd_vel and controllers through controller_manager and gz_ros2_control into Gazebo joints with clock and state feedback.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f5f1; }
+      .title { font: 700 34px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .subtitle { font: 500 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #374151; }
+      .label { font: 700 19px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .text { font: 500 15px "Ubuntu", "DejaVu Sans", sans-serif; fill: #1f2937; }
+      .small { font: 500 13px "Ubuntu", "DejaVu Sans", sans-serif; fill: #4b5563; }
+      .cmd { fill: #dbeafe; stroke: #2563eb; stroke-width: 2.5; }
+      .ctl { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2.5; }
+      .mgr { fill: #dcfce7; stroke: #16a34a; stroke-width: 2.5; }
+      .sim { fill: #fef3c7; stroke: #d97706; stroke-width: 2.5; }
+      .fb { fill: #fee2e2; stroke: #dc2626; stroke-width: 2.5; }
+      .arrowBlue { stroke: #2563eb; stroke-width: 4; fill: none; marker-end: url(#arrowBlue); }
+      .arrowPurple { stroke: #7c3aed; stroke-width: 4; fill: none; marker-end: url(#arrowPurple); }
+      .arrowGreen { stroke: #16a34a; stroke-width: 4; fill: none; marker-end: url(#arrowGreen); }
+      .arrowOrange { stroke: #d97706; stroke-width: 4; fill: none; marker-end: url(#arrowOrange); }
+      .arrowRed { stroke: #dc2626; stroke-width: 4; fill: none; marker-end: url(#arrowRed); }
+      .dash { stroke-dasharray: 9 8; }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#d97706"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="55" y="62">Runtime Flow: gz_ros2_control on Harmonic</text>
+  <text class="subtitle" x="55" y="93">How commands, controller_manager, simulation interfaces, and feedback topics interact in one loop.</text>
+
+  <rect class="cmd" x="55" y="150" width="260" height="150" rx="20"/>
+  <text class="label" x="80" y="190">ROS Commands</text>
+  <text class="text" x="80" y="224">/diff_drive_controller/cmd_vel</text>
+  <text class="text" x="80" y="250">trajectory/action commands</text>
+  <text class="small" x="80" y="278">Published by teleop, Nav2, or app node</text>
+
+  <rect class="ctl" x="355" y="150" width="290" height="150" rx="20"/>
+  <text class="label" x="380" y="190">Controllers</text>
+  <text class="text" x="380" y="224">joint_state_broadcaster</text>
+  <text class="text" x="380" y="250">diff_drive_controller / JTC</text>
+  <text class="small" x="380" y="278">Claim command/state interfaces</text>
+
+  <rect class="mgr" x="685" y="135" width="300" height="180" rx="20"/>
+  <text class="label" x="710" y="175">controller_manager</text>
+  <text class="text" x="710" y="209">Read -> update -> write cycle</text>
+  <text class="text" x="710" y="235">Uses simulation time (`/clock`)</text>
+  <text class="text" x="710" y="261">Loaded by gz_ros2_control plugin</text>
+  <text class="small" x="710" y="287">`use_sim_time` should stay true</text>
+
+  <rect class="sim" x="1015" y="150" width="140" height="150" rx="20"/>
+  <text class="label" x="1034" y="190">Gazebo</text>
+  <text class="text" x="1034" y="224">Harmonic</text>
+  <text class="text" x="1034" y="250">Physics</text>
+
+  <rect class="sim" x="355" y="370" width="430" height="170" rx="20"/>
+  <text class="label" x="380" y="410">URDF + Gazebo Plugin Pair</text>
+  <text class="text" x="380" y="444">&lt;ros2_control&gt; plugin: gz_ros2_control/GazeboSimSystem</text>
+  <text class="text" x="380" y="472">&lt;gazebo&gt; plugin: gz_ros2_control-system</text>
+  <text class="small" x="380" y="502">Both blocks are required. Missing either one breaks controller startup.</text>
+
+  <rect class="fb" x="835" y="370" width="320" height="170" rx="20"/>
+  <text class="label" x="860" y="410">Feedback and Time</text>
+  <text class="text" x="860" y="444">/joint_states, /odom, TF</text>
+  <text class="text" x="860" y="472">/clock from Gazebo via bridge</text>
+  <text class="small" x="860" y="502">RViz and navigation consume this data</text>
+
+  <rect class="cmd" x="55" y="590" width="1100" height="120" rx="20"/>
+  <text class="label" x="80" y="630">Fast Debug Sequence</text>
+  <text class="text" x="80" y="662">1) ros2 control list_controllers  2) ros2 control list_hardware_interfaces  3) ros2 topic echo /clock  4) publish cmd_vel test</text>
+  <text class="small" x="80" y="688">Most failures come from missing plugin blocks, interface mismatch, or missing simulation clock.</text>
+
+  <path class="arrowBlue" d="M315 225 L355 225"/>
+  <path class="arrowPurple" d="M645 225 L685 225"/>
+  <path class="arrowGreen" d="M985 225 L1015 225"/>
+  <path class="arrowOrange dash" d="M1085 300 C1085 330, 1000 350, 995 370"/>
+  <path class="arrowRed" d="M835 455 L785 455"/>
+  <path class="arrowRed dash" d="M685 300 C650 340, 610 350, 610 370"/>
+  <path class="arrowBlue dash" d="M835 485 C760 560, 220 560, 185 300"/>
+</svg>

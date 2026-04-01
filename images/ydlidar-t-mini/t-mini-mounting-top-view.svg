@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img" aria-labelledby="title desc">
+  <title id="title">YDLIDAR T-mini top-view mounting</title>
+  <desc id="desc">Top-view diagram showing lidar placement on a robot and rear sectors masked by the chassis.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f6f2; }
+      .robot { fill: #1f2937; }
+      .lidar { fill: #f59e0b; stroke: #92400e; stroke-width: 4; }
+      .ring { fill: none; stroke: #0ea5e9; stroke-width: 4; }
+      .mask { fill: rgba(239, 68, 68, 0.18); stroke: #dc2626; stroke-width: 2; }
+      .clear { fill: rgba(34, 197, 94, 0.12); stroke: #16a34a; stroke-width: 2; }
+      .arrow { stroke: #111827; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .title { font: 700 28px Arial, sans-serif; fill: #111827; }
+      .label { font: 700 19px Arial, sans-serif; fill: #111827; }
+      .text { font: 400 16px Arial, sans-serif; fill: #374151; }
+      .small { font: 400 14px Arial, sans-serif; fill: #4b5563; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#111827"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1000" height="560"/>
+
+  <text class="title" x="50" y="50">Top-View Mounting Guidance</text>
+
+  <circle class="ring" cx="360" cy="300" r="185"/>
+  <path class="mask" d="M360 300 L245 445 A185 185 0 0 0 475 445 Z"/>
+  <path class="clear" d="M360 300 L360 115 A185 185 0 0 1 545 300 L360 300 Z"/>
+
+  <rect class="robot" x="250" y="180" width="220" height="250" rx="30" ry="30"/>
+  <circle class="lidar" cx="360" cy="185" r="20"/>
+
+  <text class="label" x="322" y="188" text-anchor="end">Front</text>
+  <path class="arrow" d="M360 140 L360 80"/>
+
+  <text class="label" x="610" y="170">Good practice</text>
+  <text class="text" x="610" y="205">Mount near the centerline when possible.</text>
+  <text class="text" x="610" y="232">Keep the scan plane clear of bumpers and covers.</text>
+  <text class="text" x="610" y="259">Mask blocked rear sectors with `ignore_array`.</text>
+  <text class="text" x="610" y="286">Choose height based on the obstacles you need to detect.</text>
+
+  <text class="label" x="610" y="350">What to avoid</text>
+  <text class="text" x="610" y="385">Do not hide the lidar behind a bumper lip.</text>
+  <text class="text" x="610" y="412">Do not leave chassis hits in `/scan`.</text>
+  <text class="text" x="610" y="439">Do not guess the forward direction in TF.</text>
+
+  <text class="small" x="220" y="485">Green sector: clean forward visibility</text>
+  <text class="small" x="220" y="508">Red sector: example rear area to ignore if the chassis blocks the scan</text>
+</svg>

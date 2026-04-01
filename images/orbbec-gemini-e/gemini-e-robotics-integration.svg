@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Orbbec Gemini E robotics integration diagram</title>
+  <desc id="desc">A block diagram showing the Gemini E camera feeding ROS 2 topics into perception, navigation, manipulation, and visualization pipelines, with an optional external IMU for state estimation.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f5ef; }
+      .title { font: 700 34px "Ubuntu", "DejaVu Sans", sans-serif; fill: #171717; }
+      .subtitle { font: 500 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #3f3f46; }
+      .label { font: 700 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .text { font: 500 16px "Ubuntu", "DejaVu Sans", sans-serif; fill: #1f2937; }
+      .small { font: 500 14px "Ubuntu", "DejaVu Sans", sans-serif; fill: #374151; }
+      .camera { fill: #111827; }
+      .frame { fill: #dbeafe; stroke: #2563eb; stroke-width: 2; rx: 20; }
+      .transport { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2; rx: 20; }
+      .compute { fill: #dcfce7; stroke: #16a34a; stroke-width: 2; rx: 20; }
+      .nav { fill: #fef3c7; stroke: #d97706; stroke-width: 2; rx: 20; }
+      .warn { fill: #fee2e2; stroke: #dc2626; stroke-width: 2; rx: 20; }
+      .arrow-blue { stroke: #2563eb; stroke-width: 4; fill: none; marker-end: url(#arrowBlue); }
+      .arrow-green { stroke: #16a34a; stroke-width: 4; fill: none; marker-end: url(#arrowGreen); }
+      .arrow-orange { stroke: #d97706; stroke-width: 4; fill: none; marker-end: url(#arrowOrange); }
+      .arrow-purple { stroke: #7c3aed; stroke-width: 4; fill: none; marker-end: url(#arrowPurple); }
+      .arrow-red { stroke: #dc2626; stroke-width: 4; fill: none; marker-end: url(#arrowRed); }
+      .dash { stroke-dasharray: 10 10; }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="60" y="64">Orbbec Gemini E in a Robot ROS 2 Stack</text>
+  <text class="subtitle" x="60" y="96">Short-range RGB-D sensor on USB 2.0. Use RGB plus depth for most robot perception. Add an external IMU when motion estimation matters.</text>
+
+  <g transform="translate(55,155)">
+    <rect x="0" y="0" width="255" height="220" rx="28" fill="#f3f4f6" stroke="#111827" stroke-width="2"/>
+    <rect x="26" y="54" width="203" height="92" rx="28" fill="#111827"/>
+    <circle cx="72" cy="100" r="25" fill="#374151" stroke="#9ca3af" stroke-width="4"/>
+    <circle cx="183" cy="100" r="25" fill="#374151" stroke="#9ca3af" stroke-width="4"/>
+    <circle cx="110" cy="100" r="7" fill="#f59e0b"/>
+    <circle cx="110" cy="123" r="7" fill="#f59e0b"/>
+    <rect x="129" y="83" width="20" height="20" rx="4" fill="#f9fafb" stroke="#9ca3af" stroke-width="2"/>
+    <circle cx="156" cy="100" r="10" fill="#4b5563" stroke="#9ca3af" stroke-width="3"/>
+    <text class="label" x="25" y="32">Gemini E Camera</text>
+    <text class="text" x="25" y="172">Depth, RGB, IR</text>
+    <text class="text" x="25" y="198">USB 2.0 Type-C</text>
+  </g>
+
+  <g transform="translate(390,145)">
+    <rect class="transport" x="0" y="0" width="325" height="250" rx="24"/>
+    <text class="label" x="24" y="40">ROS 2 Driver Layer</text>
+    <text class="text" x="24" y="80">`orbbec_camera` + `gemini_e.launch.py`</text>
+    <text class="text" x="24" y="116">Recommended topics:</text>
+    <text class="small" x="40" y="148">/camera/color/image_raw</text>
+    <text class="small" x="40" y="176">/camera/depth/image_raw</text>
+    <text class="small" x="40" y="204">/camera/color/camera_info</text>
+    <text class="small" x="40" y="232">/camera/depth/camera_info</text>
+  </g>
+
+  <g transform="translate(780,128)">
+    <rect class="compute" x="0" y="0" width="350" height="150" rx="24"/>
+    <text class="label" x="24" y="38">Perception Pipeline</text>
+    <text class="small" x="24" y="78">RGB-D detection</text>
+    <text class="small" x="24" y="104">Segmentation and tabletop perception</text>
+    <text class="small" x="24" y="130">Grasp target depth lookup</text>
+  </g>
+
+  <g transform="translate(780,312)">
+    <rect class="nav" x="0" y="0" width="350" height="150" rx="24"/>
+    <text class="label" x="24" y="38">Navigation Pipeline</text>
+    <text class="small" x="24" y="78">Depth image to local obstacle layer</text>
+    <text class="small" x="24" y="104">Point cloud only if a downstream node needs it</text>
+    <text class="small" x="24" y="130">Fuse with odometry and IMU</text>
+  </g>
+
+  <g transform="translate(780,496)">
+    <rect class="frame" x="0" y="0" width="350" height="150" rx="24"/>
+    <text class="label" x="24" y="38">Visualization and Debug</text>
+    <text class="small" x="24" y="78">RViz2</text>
+    <text class="small" x="24" y="104">Depth-color alignment checks</text>
+    <text class="small" x="24" y="130">Runtime service tuning</text>
+  </g>
+
+  <g transform="translate(390,454)">
+    <rect class="warn" x="0" y="0" width="325" height="190" rx="24"/>
+    <text class="label" x="24" y="38">Robot Integration Rules</text>
+    <text class="small" x="24" y="78">Use `SENSOR_DATA` QoS for live sensor graphs</text>
+    <text class="small" x="24" y="106">Disable point clouds if not needed</text>
+    <text class="small" x="24" y="134">Keep TF from `base_link` to camera correct</text>
+    <text class="small" x="24" y="162">Add external IMU for fast-moving robots</text>
+  </g>
+
+  <g transform="translate(55,470)">
+    <rect class="frame" x="0" y="0" width="255" height="120" rx="24"/>
+    <text class="label" x="20" y="36">Optional External IMU</text>
+    <text class="small" x="20" y="72">Needed for VIO, motion compensation,</text>
+    <text class="small" x="20" y="96">and stronger state estimation</text>
+  </g>
+
+  <path class="arrow-purple" d="M 310 265 L 390 265"/>
+  <path class="arrow-green" d="M 715 220 L 780 220"/>
+  <path class="arrow-orange" d="M 715 387 L 780 387"/>
+  <path class="arrow-blue" d="M 715 571 L 780 571"/>
+  <path class="arrow-red dash" d="M 310 530 C 345 530, 345 550, 390 550"/>
+  <path class="arrow-red dash" d="M 250 590 C 520 720, 860 700, 955 646"/>
+
+  <text class="small" x="332" y="245">USB 2.0 + SDK wrapper</text>
+  <text class="small" x="733" y="206">RGB-D</text>
+  <text class="small" x="726" y="371">Depth first</text>
+  <text class="small" x="724" y="554">RViz and services</text>
+  <text class="small" x="325" y="516">State estimation input</text>
+</svg>

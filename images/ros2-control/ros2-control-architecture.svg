@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">ros2_control architecture overview</title>
+  <desc id="desc">Diagram showing command inputs flowing through controllers and controller manager to hardware and joints, with feedback returning as joint states and transforms.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f5ef; }
+      .title { font: 700 34px "Ubuntu", "DejaVu Sans", sans-serif; fill: #171717; }
+      .subtitle { font: 500 18px "Ubuntu", "DejaVu Sans", sans-serif; fill: #3f3f46; }
+      .label { font: 700 20px "Ubuntu", "DejaVu Sans", sans-serif; fill: #111827; }
+      .text { font: 500 16px "Ubuntu", "DejaVu Sans", sans-serif; fill: #1f2937; }
+      .small { font: 500 14px "Ubuntu", "DejaVu Sans", sans-serif; fill: #4b5563; }
+      .sensor { fill: #e0f2fe; stroke: #0284c7; stroke-width: 2.5; }
+      .control { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2.5; }
+      .manager { fill: #dcfce7; stroke: #16a34a; stroke-width: 2.5; }
+      .hardware { fill: #fef3c7; stroke: #d97706; stroke-width: 2.5; }
+      .robot { fill: #fee2e2; stroke: #dc2626; stroke-width: 2.5; }
+      .feedback { fill: #e5e7eb; stroke: #4b5563; stroke-width: 2.5; }
+      .arrowBlue { stroke: #0284c7; stroke-width: 4; fill: none; marker-end: url(#arrowBlue); }
+      .arrowPurple { stroke: #7c3aed; stroke-width: 4; fill: none; marker-end: url(#arrowPurple); }
+      .arrowGreen { stroke: #16a34a; stroke-width: 4; fill: none; marker-end: url(#arrowGreen); }
+      .arrowOrange { stroke: #d97706; stroke-width: 4; fill: none; marker-end: url(#arrowOrange); }
+      .arrowGray { stroke: #4b5563; stroke-width: 4; fill: none; marker-end: url(#arrowGray); }
+      .dash { stroke-dasharray: 10 10; }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1200" height="620"/>
+
+  <text class="title" x="60" y="64">ros2_control Architecture</text>
+  <text class="subtitle" x="60" y="96">Commands flow from ROS 2 interfaces into controllers, through controller_manager, into hardware drivers, then back as joint feedback for the rest of the stack.</text>
+
+  <rect class="sensor" x="60" y="160" width="250" height="140" rx="24"/>
+  <text class="label" x="86" y="202">Command Sources</text>
+  <text class="text" x="86" y="240">`/cmd_vel`</text>
+  <text class="text" x="86" y="268">trajectory action</text>
+  <text class="text" x="86" y="296">test command topics</text>
+
+  <rect class="control" x="380" y="145" width="255" height="170" rx="24"/>
+  <text class="label" x="406" y="187">Controllers</text>
+  <text class="text" x="406" y="225">`diff_drive_controller`</text>
+  <text class="text" x="406" y="253">`joint_trajectory_controller`</text>
+  <text class="text" x="406" y="281">`forward_command_controller`</text>
+
+  <rect class="manager" x="705" y="130" width="255" height="200" rx="24"/>
+  <text class="label" x="731" y="172">controller_manager</text>
+  <text class="text" x="731" y="210">Lifecycle and switching</text>
+  <text class="text" x="731" y="238">Read -> update -> write</text>
+  <text class="text" x="731" y="266">Interface ownership</text>
+  <text class="text" x="731" y="294">`ros2_control_node`</text>
+
+  <rect class="hardware" x="60" y="380" width="420" height="170" rx="24"/>
+  <text class="label" x="86" y="422">Hardware Interface</text>
+  <text class="text" x="86" y="460">Your robot plugin or `mock_components/GenericSystem`</text>
+  <text class="text" x="86" y="490">Exports command interfaces:</text>
+  <text class="small" x="120" y="518">position, velocity, effort</text>
+  <text class="text" x="86" y="542">Exports state interfaces:</text>
+  <text class="small" x="120" y="570">position, velocity, effort</text>
+
+  <rect class="robot" x="560" y="390" width="400" height="160" rx="24"/>
+  <text class="label" x="586" y="432">Robot or Simulator</text>
+  <text class="text" x="586" y="470">Motors, encoders, actuators</text>
+  <text class="text" x="586" y="498">Gazebo Sim, mock hardware, or real robot</text>
+  <text class="text" x="586" y="526">Actual joint movement happens here</text>
+
+  <rect class="feedback" x="1010" y="220" width="150" height="250" rx="24"/>
+  <text class="label" x="1034" y="258">Feedback</text>
+  <text class="small" x="1034" y="300">`/joint_states`</text>
+  <text class="small" x="1034" y="332">TF</text>
+  <text class="small" x="1034" y="364">odometry</text>
+  <text class="small" x="1034" y="396">RViz</text>
+  <text class="small" x="1034" y="428">Nav2 / MoveIt</text>
+
+  <path class="arrowBlue" d="M 310 230 L 380 230"/>
+  <path class="arrowPurple" d="M 635 230 L 705 230"/>
+  <path class="arrowGreen" d="M 832 330 L 832 390"/>
+  <path class="arrowOrange" d="M 480 465 L 560 465"/>
+  <path class="arrowGray dash" d="M 960 420 L 1010 420"/>
+  <path class="arrowGray dash" d="M 1085 220 C 1085 138, 965 92, 832 92 C 655 92, 655 92, 635 145"/>
+
+  <text class="small" x="322" y="216">ROS 2 topics and actions</text>
+  <text class="small" x="647" y="216">claimed interfaces</text>
+  <text class="small" x="848" y="370">write commands</text>
+  <text class="small" x="496" y="451">measured states</text>
+  <text class="small" x="900" y="112">state feedback returns to the stack</text>
+</svg>

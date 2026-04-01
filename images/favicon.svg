@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Mohammad Robot favicon</title>
+  <rect width="128" height="128" rx="28" fill="#111827"/>
+  <rect x="28" y="26" width="72" height="52" rx="16" fill="#f9fafb"/>
+  <circle cx="52" cy="52" r="8" fill="#111827"/>
+  <circle cx="76" cy="52" r="8" fill="#111827"/>
+  <rect x="50" y="84" width="28" height="10" rx="5" fill="#f59e0b"/>
+  <path d="M40 90 L28 106" stroke="#f9fafb" stroke-width="8" stroke-linecap="round"/>
+  <path d="M88 90 L100 106" stroke="#f9fafb" stroke-width="8" stroke-linecap="round"/>
+  <path d="M52 26 L44 14" stroke="#60a5fa" stroke-width="8" stroke-linecap="round"/>
+  <path d="M76 26 L84 14" stroke="#60a5fa" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="44" cy="14" r="5" fill="#60a5fa"/>
+  <circle cx="84" cy="14" r="5" fill="#60a5fa"/>
+</svg>
