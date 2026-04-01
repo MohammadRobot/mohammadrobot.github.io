@@ -1,8 +1,8 @@
 # ros2_control for ROS 2 Robots
 
-This page is a practical introduction to `ros2_control` for mobile robots, robot arms, and simulation projects.
+Build a clean control pipeline for your robot using `ros2_control`, from command topics to hardware interfaces and feedback.
 
-The goal is to understand what `ros2_control` does, how the pieces fit together, and what a minimal setup looks like before you move to real hardware.
+By the end of this page, you should be able to bring up a minimal differential-drive control stack and debug it quickly.
 
 Official references:
 
@@ -11,21 +11,58 @@ Official references:
 - [diff_drive_controller docs](https://control.ros.org/jazzy/doc/ros2_controllers/diff_drive_controller/doc/userdoc.html)
 - [joint_trajectory_controller docs](https://control.ros.org/jazzy/doc/ros2_controllers/joint_trajectory_controller/doc/userdoc.html)
 
+## Quick Start
+
+Install core packages:
+
+```bash
+sudo apt update
+sudo apt install ros-$ROS_DISTRO-ros2-control ros-$ROS_DISTRO-ros2-controllers
+```
+
+Bring up controllers:
+
+```bash
+ros2 run controller_manager spawner joint_state_broadcaster
+ros2 run controller_manager spawner diff_drive_controller
+```
+
+Send a test command:
+
+```bash
+ros2 topic pub /diff_drive_controller/cmd_vel geometry_msgs/msg/TwistStamped \
+  "{header: {frame_id: base_link}, twist: {linear: {x: 0.2}, angular: {z: 0.4}}}" -r 10
+```
+
+Expected result:
+
+- `/joint_states` updates continuously
+- `/odom` updates
+- TF shows `odom -> base_link`
+
+!!! tip
+    If motion does not work, run `ros2 control list_hardware_interfaces` first. Most failures are interface mismatches.
+
+## Prerequisites
+
+| Item | Requirement |
+| --- | --- |
+| ROS 2 | A sourced ROS 2 environment (`$ROS_DISTRO`) |
+| Robot description | URDF or xacro with valid joint names |
+| Control config | Controller YAML with matching joint names |
+| Runtime tools | `controller_manager` CLI available |
+
+Optional for simulation:
+
+```bash
+sudo apt install ros-$ROS_DISTRO-gz-ros2-control
+```
+
+## Architecture
+
 ![ros2_control architecture overview](../images/ros2-control/ros2-control-architecture.svg){ width="1100" }
 
-High-level view: ROS 2 commands go into controllers, `controller_manager` arbitrates interfaces, the hardware layer talks to the robot, and feedback comes back as joint states, odometry, and TF.
-
-## 1. What `ros2_control` is
-
-`ros2_control` is the standard ROS 2 control framework used to connect:
-
-- controllers
-- hardware drivers
-- robot description
-- command topics and actions
-- joint feedback
-
-It gives you a clean structure instead of writing custom motor code directly in random ROS nodes.
+High-level flow: ROS 2 commands go into controllers, `controller_manager` arbitrates interfaces, the hardware layer talks to motors or simulation, and feedback returns as joint states, odometry, and TF.
 
 Typical data flow:
 
@@ -45,77 +82,36 @@ joint state feedback
 controllers + robot_state_publisher + RViz
 ```
 
-## 2. Main building blocks
+## Core Concepts
 
-### Controller Manager
+`ros2_control` connects:
 
-`controller_manager` is the core runtime node.
+- controllers
+- hardware drivers
+- robot description
+- command topics or actions
+- joint feedback
 
-It:
+Main runtime blocks:
 
-- loads controllers
-- manages controller lifecycle
-- reads hardware states
-- updates controllers
-- writes commands back to hardware
+- `controller_manager`: loads controllers, manages lifecycle, executes read-update-write loop
+- hardware component: exports command and state interfaces
+- controllers and broadcasters: consume interfaces and publish command/state outputs
 
-### Hardware component
-
-The hardware layer exposes command and state interfaces for your robot.
-
-The main hardware types are:
-
-- `system` for a whole robot or multi-joint device
-- `actuator` for a single actuator
-- `sensor` for sensors that expose state interfaces
-
-### Controllers and broadcasters
-
-Controllers consume interfaces and generate commands.
-
-Broadcasters publish state without commanding hardware.
-
-Common examples:
+Common controller packages:
 
 | Package | Use |
 | --- | --- |
 | `joint_state_broadcaster` | publish joint states |
 | `diff_drive_controller` | two-wheel mobile bases |
 | `joint_trajectory_controller` | robot arms and multi-joint motion |
-| `forward_command_controller` | simple direct command testing |
+| `forward_command_controller` | direct command testing |
 
-## 3. When to use `ros2_control`
+## Minimal Configuration
 
-Use it when you want:
+### 1) URDF `ros2_control` block
 
-- a clean control architecture for a real robot
-- the same control pattern in simulation and on hardware
-- standard controllers instead of custom one-off motor nodes
-- proper interface ownership between multiple controllers
-- easier debugging of command and feedback paths
-
-If your robot is growing beyond one quick demo node, `ros2_control` is usually the right direction.
-
-## 4. Install the main packages
-
-Install the framework and standard controllers:
-
-```bash
-sudo apt update
-sudo apt install ros-$ROS_DISTRO-ros2-control ros-$ROS_DISTRO-ros2-controllers
-```
-
-If you are using Gazebo Sim, install the integration package too:
-
-```bash
-sudo apt install ros-$ROS_DISTRO-gz-ros2-control
-```
-
-## 5. Minimal `ros2_control` block in URDF
-
-All joints used by `ros2_control` must already exist in your robot URDF.
-
-This minimal example uses mock hardware so you can test the control pipeline before connecting real motors:
+All joints used by controllers must exist in URDF and use exactly the same names.
 
 ```xml
 <ros2_control name="DriveBaseSystem" type="system">
@@ -143,17 +139,12 @@ This minimal example uses mock hardware so you can test the control pipeline bef
 </ros2_control>
 ```
 
-Why this matters:
+Expected result:
 
-- the controller reads and writes named interfaces
-- the joint names must match the URDF exactly
-- the command and state interfaces must match what the controller expects
+- interfaces appear in `ros2 control list_hardware_interfaces`
+- no missing-joint or interface-type errors on startup
 
-For a real robot, replace `mock_components/GenericSystem` with your own hardware plugin.
-
-## 6. Minimal controller configuration
-
-For a differential-drive robot, a small controller YAML usually starts like this:
+### 2) Controller YAML
 
 ```yaml
 controller_manager:
@@ -180,37 +171,37 @@ diff_drive_controller:
     use_stamped_vel: true
 ```
 
-Important idea:
+Expected result:
 
-- `joint_state_broadcaster` publishes feedback
-- `diff_drive_controller` commands the wheels
+- controller types resolve correctly
+- `joint_state_broadcaster` and `diff_drive_controller` can activate
 
-For a robot arm, the usual next controller is `joint_trajectory_controller`, not `diff_drive_controller`.
+!!! warning
+    If `left_wheel_names` and `right_wheel_names` do not exactly match URDF joint names, the controller will not claim interfaces.
 
-## 7. Typical bring-up sequence
+## Step-by-Step Bring-up
 
-The normal startup pattern is:
+### 1) Start robot description and control node
 
-1. Start `robot_state_publisher` with the robot URDF or xacro.
-2. Start `ros2_control_node` from `controller_manager`.
-3. Spawn the controllers you need.
+Start `robot_state_publisher` with your URDF/xacro, then start `ros2_control_node` from `controller_manager`.
 
-Typical controller spawn commands:
+Expected result:
+
+- hardware component is loaded
+- no plugin initialization errors
+
+### 2) Spawn controllers
 
 ```bash
 ros2 run controller_manager spawner joint_state_broadcaster
 ros2 run controller_manager spawner diff_drive_controller
 ```
 
-If you use launch files, the `spawner` helper is the standard way to load and activate controllers during startup.
+Expected result:
 
-![ros2_control differential drive bring-up](../images/ros2-control/ros2-control-diff-drive-bringup.svg){ width="1100" }
+- both controllers show as active in `ros2 control list_controllers`
 
-This is the minimum structure that usually works well for a mobile base: robot description plus controller YAML into `ros2_control_node`, then spawn `joint_state_broadcaster` and `diff_drive_controller`.
-
-## 8. Useful CLI commands
-
-These commands are the fastest way to see whether your control stack is actually alive:
+### 3) Validate interfaces and runtime state
 
 ```bash
 ros2 control list_hardware_components
@@ -219,78 +210,61 @@ ros2 control list_controllers
 ros2 control list_controller_types
 ```
 
-What you want to see:
+Expected result:
 
-- hardware component loaded and active
-- command interfaces available
-- controllers loaded
-- broadcasters and controllers in the expected lifecycle state
+- hardware component present and active
+- expected command interfaces available
+- expected state interfaces available
 
-## 9. Quick test for a differential drive robot
-
-If your controller name is `diff_drive_controller`, publish a velocity command like this:
+### 4) Publish a drive command and verify feedback
 
 ```bash
 ros2 topic pub /diff_drive_controller/cmd_vel geometry_msgs/msg/TwistStamped \
   "{header: {frame_id: base_link}, twist: {linear: {x: 0.2}, angular: {z: 0.4}}}" -r 10
 ```
 
-Then check:
+Then verify:
 
 - `/joint_states`
 - `/odom`
 - TF between `odom` and `base_link`
-- wheel joint motion in RViz or simulation
+- wheel motion in RViz or simulator
 
-## 10. Common mistakes
+![ros2_control differential drive bring-up](../images/ros2-control/ros2-control-diff-drive-bringup.svg){ width="1100" }
 
-These are the failures people hit most often:
+## Troubleshooting
 
-- Joint names in YAML do not match the URDF.
-- The controller expects `velocity` or `position` interfaces, but the hardware exports something else.
-- `joint_state_broadcaster` was never started.
-- The robot description is valid URDF, but the `<ros2_control>` block is missing or incomplete.
-- Wheel separation or wheel radius values are wrong, so odometry looks broken even though the controller is running.
-- Hardware loads, but the component is not active yet.
-
-When debugging, inspect interfaces first. Most `ros2_control` problems are interface-matching problems.
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| Controller fails to activate | Joint names mismatch between URDF and YAML | Match names exactly |
+| No movement after command | Command interface type does not match controller expectation | Confirm `velocity`/`position` interface types |
+| `/joint_states` missing | `joint_state_broadcaster` not started | Spawn broadcaster first |
+| Robot description loads but control fails | Missing or incomplete `<ros2_control>` block | Add required interfaces per joint |
+| Odometry is unstable or wrong | Bad wheel radius or wheel separation values | Calibrate and update YAML |
+| Hardware appears loaded but inert | Component not active | Check lifecycle state and activation logs |
 
 ![ros2_control debugging flow](../images/ros2-control/ros2-control-debug-flow.svg){ width="1100" }
 
-Debug in that order. If step `2` or step `3` is wrong, the controller will usually never behave correctly no matter how much you tune it.
+!!! note
+    Debug in this order: URDF, hardware load, interfaces, controller activation, then command/feedback topics.
 
-## 11. Real robot vs simulation
+## Real Robot vs Simulation
 
-The useful part of `ros2_control` is that the controller layer can stay mostly the same while the hardware plugin changes.
+The controller layer can remain mostly the same while the hardware plugin changes.
 
 Typical progression:
 
-- start with `mock_components/GenericSystem`
-- move to `gz_ros2_control` in simulation
-- replace the hardware plugin with your real motor driver interface
+1. start with `mock_components/GenericSystem`
+2. move to `gz_ros2_control` in simulation
+3. replace with your real motor hardware plugin
 
-That lets you test the command pipeline before touching the real robot.
+This lets you validate control behavior before touching physical hardware.
 
-## 12. Design advice
+## Next Steps
 
-Good practice for robotics projects:
+- write a custom hardware interface for your robot
+- move manipulator projects to `joint_trajectory_controller`
+- practice controller switching and lifecycle flows
+- connect this stack to Nav2 or MoveIt after interfaces are stable
 
-- keep the hardware plugin thin and hardware-specific
-- keep robot geometry and joints correct in URDF first
-- start with one broadcaster and one controller
-- prove the interfaces with CLI tools before adding navigation or MoveIt
-- tune wheel radius, wheel separation, and transmission assumptions early
-
-`ros2_control` works best when the robot description, interfaces, and controller expectations are all explicit and consistent.
-
-## 13. What to learn next
-
-After the first working setup, the next topics worth learning are:
-
-- writing a custom hardware interface
-- using `joint_trajectory_controller` for manipulators
-- `gz_ros2_control` for simulation
-- controller switching
-- debugging controller startup and interface claims
-
-If you can bring up `joint_state_broadcaster`, activate one controller, and verify the exported interfaces from the CLI, you already understand the most important part of `ros2_control`.
+If you can activate `joint_state_broadcaster`, activate one motion controller, and verify interfaces from the CLI, your foundation is correct.

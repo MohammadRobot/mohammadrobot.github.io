@@ -1,23 +1,70 @@
 # YDLIDAR T-mini for Robotics
 
-This guide is a practical training document for using the YDLIDAR T-mini family in robotics projects with ROS 2 and the official `ydlidar_ros2_driver`.
+Use this guide to deploy the YDLIDAR T-mini family in ROS 2 with stable bring-up, correct TF, and practical tuning for real robots.
 
-The goal is not just to make the lidar publish `/scan`, but to use it correctly on a robot: choose the right mount height, use the correct parameter file, avoid bad TF, and understand where a compact 2D lidar helps and where it does not.
+The goal is not just to publish `/scan`, but to run the lidar correctly on a robot: proper mount height, right parameter profile, correct frame alignment, and realistic sensing expectations.
 
 This page targets the current `Tmini` ROS 2 profile used by YDLIDAR for `Tmini Pro` and `Tmini Plus`. The hardware numbers below use the current public `T-mini Plus` product page and datasheet because those are the public references that are easy to verify.
 
-Official references:
+## Quick Start
+
+Build and source your workspace, then launch the driver with a robot-specific profile:
+
+```bash
+source ~/ydlidar_ros2_ws/install/setup.bash
+ros2 run ydlidar_ros2_driver ydlidar_ros2_driver_node \
+  --ros-args --params-file ~/ydlidar_ros2_ws/src/ydlidar_ros2_driver/params/Tmini_robot.yaml
+```
+
+Publish your real robot transform:
+
+```bash
+source ~/ydlidar_ros2_ws/install/setup.bash
+ros2 run tf2_ros static_transform_publisher \
+  0.0 0.0 0.12 0 0 0 1 base_link laser_frame
+```
+
+Run first checks:
+
+```bash
+ros2 topic echo /scan --once
+ros2 topic hz /scan
+ros2 service list | rg scan
+```
+
+Expected result:
+
+- `/scan` publishes at a stable rate
+- RViz shows stable scan geometry
+- TF includes `base_link -> laser_frame`
+
+!!! tip
+    Start with `frequency: 10.0` and the official `Tmini.yaml`-based profile, then tune only after TF and power are confirmed stable.
+
+## Prerequisites
+
+| Item | Requirement |
+| --- | --- |
+| ROS 2 workspace | `ydlidar_ros2_driver` and `YDLidar-SDK` built |
+| Device access | lidar serial device available (`/dev/ttyUSB*` or `/dev/ydlidar`) |
+| Power quality | stable `5 V` supply with enough startup current |
+| Frame setup | known mount geometry from `base_link` to `laser_frame` |
+
+## Architecture
+
+![YDLIDAR T-mini robotics integration diagram](../images/ydlidar-t-mini/t-mini-robotics-integration.svg){ width="1000" }
+
+Practical robot integration path: use the official `Tmini.yaml` profile, publish a correct `base_link -> laser_frame` transform, then feed `/scan` into RViz, SLAM, or navigation.
+
+## Official References
+
 - [YDLIDAR T-mini Plus product page](https://www.ydlidar.com/product/ydlidar-t-mini-plus)
 - [YDLIDAR T-mini Plus datasheet (PDF)](https://www.ydlidar.com/Public/upload/files/2024-05-24/YDLIDAR%20T-mini%20Plus%20Data%20Sheet_V1.1%20%28240131%29.pdf)
 - [YDLIDAR T-mini Plus user manual (PDF)](https://www.ydlidar.com/Public/upload/files/2024-05-24/YDLIDAR%20T-mini%20Plus%20User%20Manual_V1.0%20%28231222%29%20.pdf)
 - [YDLIDAR ROS 2 driver](https://github.com/YDLIDAR/ydlidar_ros2_driver)
 - [YDLIDAR SDK](https://github.com/YDLIDAR/YDLidar-SDK)
 
-![YDLIDAR T-mini robotics integration diagram](../images/ydlidar-t-mini/t-mini-robotics-integration.svg){ width="1000" }
-
-Practical robot integration path: use the official `Tmini.yaml` profile, publish a correct `base_link -> laser_frame` transform, then feed `/scan` into RViz, SLAM, or navigation.
-
-## 1. What the T-mini is good at
+## Capabilities and Limits
 
 The YDLIDAR T-mini is a compact 360-degree 2D lidar for short-to-medium range robot perception. It is a strong fit for:
 
@@ -38,7 +85,7 @@ It is not the right tool for every sensing problem. The main constraints are:
 
 If your robot must detect overhanging obstacles, open drawers, table edges above the lidar plane, or drop-offs below the plane, you need additional sensors such as bumpers, cliff sensors, or a depth camera.
 
-## 2. Key hardware facts
+## Key Hardware Facts
 
 The following values come from the current YDLIDAR T-mini Plus product page, datasheet, SDK dataset, and ROS 2 driver `Tmini.yaml` profile:
 
@@ -84,7 +131,7 @@ For ROS 2 bring-up, use the vendor's current operational source of truth first:
 - `params/Tmini.yaml` for `Tmini Pro` and `Tmini Plus`
 - `params/Tmini-Plus-SH.yaml` only if you specifically have the `T-mini Plus SH` variant
 
-## 3. Best robotics use cases
+## Best Robotics Use Cases
 
 ### Mobile robot navigation
 
@@ -118,7 +165,7 @@ The T-mini is a good teaching lidar because:
 - `/scan` is easy to inspect in RViz
 - The parameter file is small enough to understand fully
 
-## 4. Where to mount it on a robot
+## Mounting Guidance
 
 Good mechanical integration matters as much as software.
 
@@ -140,7 +187,7 @@ Good mechanical integration matters as much as software.
 
 Top-view mounting guidance: keep the scan plane clear, center the lidar when possible, and mask chassis-hit sectors in software instead of pretending they are valid obstacles.
 
-## 5. ROS 2 stack used in this workspace
+## ROS 2 Stack Used in This Workspace
 
 This guide assumes a workspace such as:
 
@@ -177,7 +224,7 @@ For current ROS 2 work:
 - do not copy the old ROS 1 `Tmini.launch` workflow
 - use `ydlidar_launch.py` or run `ydlidar_ros2_driver_node` directly
 
-## 6. Install and build
+## Install and Build
 
 If the SDK and driver are already built in your workspace, skip to the next section.
 
@@ -215,7 +262,7 @@ sudo sh src/ydlidar_ros2_driver/startup/initenv.sh
 
 After the alias script, unplug and reconnect the lidar.
 
-## 7. Prepare a robot-specific parameter file
+## Prepare a Robot-Specific Parameter File
 
 Do not edit the vendor default file in place if you can avoid it.
 
@@ -268,7 +315,7 @@ Parameters you will most likely change:
 | `frequency` | Trades refresh rate against stability |
 | `reversion`, `inverted` | Fixes reversed scan direction or mirrored maps |
 
-## 8. First bring-up
+## First Bring-up
 
 ### Option A: Quick bench test with the vendor launch
 
@@ -281,6 +328,9 @@ ros2 launch ydlidar_ros2_driver ydlidar_launch_view.py \
 ```
 
 This is convenient, but remember that the launch file also publishes a generic `base_link -> laser_frame` transform.
+
+!!! warning
+    Use Option A for bench checks only. For a real robot, do not keep the vendor placeholder TF.
 
 ### Option B: Better robot bring-up
 
@@ -302,6 +352,12 @@ ros2 run tf2_ros static_transform_publisher \
 
 Replace the transform with your real mount geometry.
 
+Expected result:
+
+- `/scan` appears with correct orientation in RViz
+- robot rotation direction matches scan motion
+- no obvious chassis self-hits unless physically unavoidable
+
 ### First checks
 
 ```bash
@@ -320,7 +376,7 @@ Recommended first checks:
 - Confirm the scan direction matches reality when the robot rotates
 - Confirm the robot body is not polluting the scan with self-hits
 
-## 9. Core topics and services you will actually use
+## Core Topics and Services You Will Actually Use
 
 | Name | Type | Use |
 | --- | --- | --- |
@@ -336,7 +392,7 @@ ros2 service call /stop_scan std_srvs/srv/Empty '{}'
 ros2 service call /start_scan std_srvs/srv/Empty '{}'
 ```
 
-## 10. Recommended launch profiles for robot work
+## Recommended Launch Profiles for Robot Work
 
 ### Profile A: General indoor robot
 
@@ -398,7 +454,7 @@ Why:
 
 - Makes orientation and self-occlusion problems obvious
 
-## 11. Tuning rules that matter
+## Tuning Rules That Matter
 
 ### 11.1 Use the right profile file first
 
@@ -461,7 +517,7 @@ Why:
 - reduces the effect of distant clutter
 - keeps attention on actionable obstacles
 
-## 12. Recommended ROS 2 integration patterns
+## Recommended ROS 2 Integration Patterns
 
 ### Nav2 or local avoidance
 
@@ -490,7 +546,7 @@ A strong low-cost combination is:
 
 This is a more honest robot stack than expecting a single 2D lidar to solve every perception problem.
 
-## 13. TF and frame setup
+## TF and Frame Setup
 
 Do not leave TF as an afterthought.
 
@@ -513,7 +569,17 @@ Bad TF is a common cause of:
 - bad obstacle positions
 - confusing RViz views
 
-## 14. Failure modes and how to think about them
+## Troubleshooting
+
+| Symptom | Likely cause | First fix |
+| --- | --- | --- |
+| No device detected | wrong serial port or permissions | check `/dev/ttyUSB*`, alias script, reconnect device |
+| Node starts but `/scan` is empty | wrong params profile or unstable power | verify `port`, model profile, and `5 V` stability |
+| Map is mirrored or rotated | `reversion` / `inverted` / TF mismatch | correct scan orientation and `base_link -> laser_frame` |
+| Robot detects itself | body parts intersect scan plane | adjust mount and use `ignore_array` |
+| Specific materials look noisy | reflective or transparent surfaces | add complementary sensors and adjust expectations |
+
+## Failure Modes and How to Think About Them
 
 ### No device detected
 
@@ -563,7 +629,7 @@ This can happen with:
 
 That is a sensing limitation, not always a software bug.
 
-## 15. A practical starting configuration
+## A Practical Starting Configuration
 
 If you want one balanced starting point for most indoor robots:
 
@@ -594,7 +660,7 @@ This gives you:
 - real TF instead of the vendor placeholder
 - a setup that is easy to debug in RViz
 
-## 16. Deployment checklist
+## Deployment Checklist
 
 Before declaring the lidar ready, verify all of the following:
 
@@ -609,7 +675,13 @@ Before declaring the lidar ready, verify all of the following:
 - Nav or SLAM is tested both stationary and moving
 - Another sensor covers what a 2D scan plane cannot see
 
-## 17. References
+## Next Steps
+
+- create two production profiles: `navigation` and `mapping`
+- validate scans while stationary and in motion before enabling Nav2
+- document final TF values and `ignore_array` choices in your robot repo
+
+## References
 
 - YDLIDAR product page: [https://www.ydlidar.com/product/ydlidar-t-mini-plus](https://www.ydlidar.com/product/ydlidar-t-mini-plus)
 - T-mini Plus datasheet: [https://www.ydlidar.com/Public/upload/files/2024-05-24/YDLIDAR%20T-mini%20Plus%20Data%20Sheet_V1.1%20%28240131%29.pdf](https://www.ydlidar.com/Public/upload/files/2024-05-24/YDLIDAR%20T-mini%20Plus%20Data%20Sheet_V1.1%20%28240131%29.pdf)
