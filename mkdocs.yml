@@ -54,9 +54,8 @@ theme:
     # See available fonts at https://fonts.google.com/
     text: Ubuntu
     code: Ubuntu Mono
-  icon:
-    logo: material/school
-  favicon: images/favicon.svg
+  logo: images/mohammad-robot-logo-mark.svg
+  favicon: images/mohammad-robot-logo-mark.svg
   features:
     - navigation.instant.prefetch
     - navigation.tabs
