@@ -36,9 +36,20 @@ extra:
 theme:
   name: material
   palette:
-    # try other colors https://squidfunk.github.io/mkdocs-material/getting-started/#primary-colors
-    primary: black 
-    accent: black 
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: light blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
   font:
     # See available fonts at https://fonts.google.com/
     text: Ubuntu
@@ -47,20 +58,38 @@ theme:
     logo: material/school
   favicon: images/favicon.svg
   features:
+    - navigation.instant.prefetch
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.instant
     - navigation.instant.progress
+    - navigation.tracking
+    - navigation.path
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.tabs.link
 
 plugins:
   - search
   - git-revision-date-localized:
       fallback_to_build_date: true
 
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - extra
   - smarty
   - admonition
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - codehilite:
       guess_lang: false
   - toc:
