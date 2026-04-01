@@ -1,6 +1,4 @@
-# Welcome to @Mohammad_Robot page 
-
-![Mohammad Robot logo](./images/mohammad-robot-logo.svg){ width="680" }
+# ![Mohammad Robot logo](./images/mohammad-robot-logo.svg){ width="680" }
 
 ![image](./images/MohammdAlShamsiPhoto.jpg)
 
